@@ -1,4 +1,0 @@
-INDEX VERSION 1.131+C:\Users\Smith Fernandes\Documents\4 - github\AppArtigo\.metadata\.plugins\org.eclipse.jdt.core
-4110086536.index
-1704979481.index
-1865797976.index
