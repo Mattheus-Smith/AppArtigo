@@ -1,78 +1,61 @@
-import copy
+from absl import app, flags, logging
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
+from pylab import *
 
-def histo(imagem, out):
-    img = cv2.cvtColor(imagem, cv2.COLOR_RGB2GRAY)
-    hist = cv2.calcHist([img], [0], None, [256], [0, 256]).astype(int)
-
-    total = 0
-    for i in range(len(hist)):
-        total += hist[i]
-
-    if (out == 1):
-        return hist, total
-    elif (out == 0):
+def main(_args):
+    def histo(imagem, out):
+        img = cv2.cvtColor(imagem, cv2.COLOR_RGB2GRAY)
+        hist = cv2.calcHist([img], [0], None, [256], [0, 256]).astype(int)
         plt.plot(hist)
+        plt.savefig(r"./saidas/hist.png")
         plt.show()
 
-def functionSuperExposicao(hist):
-    porcetagem = 0.75
-    parteE = 0;
-    parteD = 0
+        total = 0
+        for i in range(len(hist)):
+            total += hist[i]
 
-    for i in range(len(hist)):
-        if (i < int(len(hist) * porcetagem)):
-            parteE += hist[i]
+        return hist, total
+
+    def resultado(hist):
+        porcetagemMenor = 0.25
+        porcetagemMaior = 0.75
+        parteE = 0;
+        meio = 0;
+        parteD = 0
+
+        for i in range(len(hist)):
+            if (i < int(len(hist) * porcetagemMenor)):
+                parteE += hist[i]
+            elif (i > int(len(hist) * porcetagemMaior)):
+                parteD += hist[i]
+            else:
+                meio += hist[i]
+
+        if (parteD > parteE + meio):
+            f = open("./saidas/saida.txt", "w")
+            f.write("Essa imagem tem superexposição")
+            f.close()
+        elif (parteE > parteD + meio):
+            f = open("./saidas/saida.txt", "w")
+            f.write("Essa imagem tem suberexposição")
+            f.close()
         else:
-            parteD += hist[i]
+            f = open("./saidas/saida.txt", "w")
+            f.write("É uma imagem normal")
+            f.close()
 
-    if (parteD > parteE):
-        return 1
-    else:
-        return 0
+    sol = cv2.imread("cidadeEscura.jpg")
+    hist, total = histo(sol, 1)
+    resultado(hist)
 
-def functionSuberExposicao(hist):
-    porcetagem = 0.25
-    parteE = 0;
-    parteD = 0
+    # cv2.imshow("image",sol)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
-    for i in range(len(hist)):
-        if (i < int(len(hist) * porcetagem)):
-            parteE += hist[i]
-        else:
-            parteD += hist[i]
-
-    if (parteE > parteD):
-        return 1
-    else:
-        return 0
-
-def resultado(hist):
-    porcetagemMenor = 0.25
-    porcetagemMaior = 0.75
-    parteE = 0; meio = 0; parteD = 0
-
-    for i in range(len(hist)):
-        if (i < int(len(hist) * porcetagemMenor)):
-            parteE += hist[i]
-        elif ( i > int(len(hist) * porcetagemMaior) ):
-            parteD += hist[i]
-        else:
-            meio += hist[i]
-
-    if (parteD > parteE + meio):
-        print("Essa imagem tem superexposição")
-    elif(parteE > parteD + meio):
-        print("Essa imagem tem suberexposição")
-    else:
-        print("É uma imagem normal")
-
-sol = cv2.imread("caraSol.jpg")
-hist, total = histo(sol, 1)
-resultado(hist)
-
-#cv2.imshow("image",sol)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+if __name__ == '__main__':
+    try:
+        app.run(main)
+    except SystemExit:
+        pass

@@ -34,10 +34,14 @@ import java.awt.Font;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.TextField;
+import java.io.*;
 
 public class Main extends JFrame {
 
-	private JPanel contentPane;
+	static final Runtime run = Runtime.getRuntime();
+    static Process pro;
+    static BufferedReader read;
+	private JPanel Frame;
 
 	/**
 	 * Launch the application.
@@ -54,6 +58,25 @@ public class Main extends JFrame {
 			}
 		});
 	}
+	
+	private static void showFB() throws IOException
+    {
+        read = new BufferedReader(new InputStreamReader(pro.getInputStream()));
+        System.out.println(read.readLine());
+    }
+    
+	
+	public void ExecutarScriptPython(String saida) {
+		String Start = "cmd /c start cmd.exe";
+
+        try {
+            pro = run.exec("python C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\main.py");
+            showFB();//Mostra as resposta
+
+        } catch(Exception e) {
+            System.err.println(e);
+        }
+	}
 
 	/**
 	 * Create the frame.
@@ -62,66 +85,37 @@ public class Main extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(600, 600);
 		
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		Frame = new JPanel();
+		Frame.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(Frame);
+		Frame.setLayout(null);
 		
+		String output = "aq";
 		Button btnEsq = new Button("Ler imagem");
+		
+		
 		btnEsq.setBounds(50, 50, 170, 90);
-		//add funcão de clicavel para adicionar a leitura da imagem
-		
-		JButton btnCarregarFoto = new JButton("...");
-		btnCarregarFoto.setForeground(UIManager.getColor("Button.light"));
-		btnCarregarFoto.setBackground(new Color(0, 38, 51));
-		btnCarregarFoto.setPreferredSize(new Dimension(20, 100));
-		
+		//funcão de click para fazer a leitura da imagem
 		btnEsq.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView());
+				//JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView());
+				
+				JFileChooser jfc = new JFileChooser("C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\imagens");	//pc Projeto
 				jfc.setDialogTitle("Choose a directory to save your file: teste ");
 				jfc.setAcceptAllFileFilterUsed(false);
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG and JPEG images", "png", "jpeg");
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG, JPEG and JPG images", "png", "jpeg", "jpg");
 				jfc.setFileFilter(filter);
 
 				int returnValue = jfc.showSaveDialog(null);
-				if (returnValue == JFileChooser.APPROVE_OPTION) {
-					if (jfc.getSelectedFile().isDirectory()) {
-						System.out.println("You selected the directory: " + jfc.getSelectedFile());
-					}
-				}
-				JOptionPane.showMessageDialog(null, "Arquivo selecionado");
-				String saida = jfc.getSelectedFile().getPath() ;				
+				//JOptionPane.showMessageDialog(null, "Arquivo selecionado");
+				String saida = jfc.getSelectedFile().getPath() ;
 				//fotoInfo1.replaceSelection(saida);
+				System.out.print("voce selecionou essa imagem: "+ saida+"\n");
+				
+				//executar codigo em python
+				ExecutarScriptPython(saida);
 			}
 		});
-		
-//		btnEsq.addActionListener((ActionListener) new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				try {					
-//					
-//					File file = new File("H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\cidadeEscura.jpg");
-//			        BufferedImage bufferedImage = ImageIO.read(file);
-//
-//			        ImageIcon imageIcon = new ImageIcon(bufferedImage);
-//			        JFrame jFrame = new JFrame();
-//
-//			        jFrame.setSize(500, 500);
-//			        JLabel jLabel = new JLabel();
-//
-//			        jLabel.setIcon(imageIcon);
-//			        jFrame.getContentPane().add(jLabel);
-//			        jFrame.setVisible(true);
-//
-//			        jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE );
-//				
-//					
-//				} catch (IOException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-//			}
-//		});
 		
 //		JLabel iconConfirmar = new JLabel(new ImageIcon("./imagens/Seach_white.png"));
 //		BotaoPesquisar.add(iconConfirmar);
@@ -139,16 +133,16 @@ public class Main extends JFrame {
 //		    }
 //		});
 		
-		contentPane.add(btnEsq);
+		Frame.add(btnEsq);
 		
 		Label label_OU = new Label("OU");
 		label_OU.setFont(new Font("Yu Gothic", Font.BOLD, 15));
 		label_OU.setAlignment(Label.CENTER);
 		label_OU.setBounds(234, 50, 130, 90);
-		contentPane.add(label_OU);
+		Frame.add(label_OU);
 		
 		Button btnDrt = new Button("Escolher imagem aleatória");
 		btnDrt.setBounds(380, 50, 170, 90);
-		contentPane.add(btnDrt);
+		Frame.add(btnDrt);
 	}
 }
