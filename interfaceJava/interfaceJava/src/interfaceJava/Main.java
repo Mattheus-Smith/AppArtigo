@@ -67,11 +67,36 @@ public class Main extends JFrame {
     
 	
 	public void ExecutarScriptPython(String saida) {
+		String texto1 = "python C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\main.py";
+		
+		String texto = "C:\\\\Users\\\\Public\\\\teste\\\\main.py";
 		String Start = "cmd /c start cmd.exe";
 
         try {
-            pro = run.exec("python C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\main.py");
-            showFB();//Mostra as resposta
+        	//Runtime.getRuntime().exec("python C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\main.py");
+
+        	//since exec has its own process we can use that
+//        	ProcessBuilder builder = new ProcessBuilder("python", "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\main.py");
+//        	builder.directory(new File("C:\\"));
+//        	builder.redirectError();
+//
+//        	Process newProcess = builder.start();
+        	
+//        	String command = "cmd.exe /c start python C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\main.py";
+//        	Process p = Runtime.getRuntime().exec(command);
+        	
+        	ProcessBuilder builder = new ProcessBuilder("python", texto);
+        	builder.directory(new File("python"));
+        	builder.redirectError();
+        	Process newProcess = builder.start();
+//            pro = run.exec(command);
+//            showFB();//Mostra as resposta
+        	
+//        	ProcessBuilder builder = new ProcessBuilder();
+//        	builder.command("cmd.exe", "/c", "python" ,texto);
+//        	pro = builder.start();
+        	//pro = run.exec(texto);
+            //showFB();//Mostra as resposta
 
         } catch(Exception e) {
             System.err.println(e);
