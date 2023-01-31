@@ -1,4 +1,3 @@
-from absl import app, flags, logging
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
@@ -13,7 +12,8 @@ def histo(imagem):
     img = cv2.cvtColor(imagem, cv2.COLOR_RGB2GRAY)
     hist = cv2.calcHist([img], [0], None, [256], [0, 256]).astype(int)
     plt.plot(hist)
-    plt.savefig(r"C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\saida.png")
+    #plt.savefig(r"C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\saida.png") #Projeto
+    plt.savefig(r"H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\saida.png") #pessoal
     #plt.show()
 
     total = 0
@@ -41,8 +41,8 @@ def resultado(hist):
     # print("Meio ", meio)
     # print("Dir ",parteD )
 
-    f = open("C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\saida.txt", "w")    #projeto
-    # f = open("C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\saida.txt", "w")  #Pessoal
+    # f = open("C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\saida.txt", "w")    #projeto
+    f = open("H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\saida.txt", "w")  #Pessoal
     if (parteD > parteE + meio):
         f.write("Essa imagem tem superexposição")
         f.close()
