@@ -55,7 +55,12 @@ public class Main extends JFrame {
 	JPanel infoDireita;
 	Label nomeImagem;
 	Label textOutput;
-	private JPanel meio_1;
+	private JPanel meio;
+	
+	String arq;
+	ImageIcon histo;
+	String[] cmdExec;
+	JFileChooser jfc;
 	
 	
 	/**
@@ -74,16 +79,12 @@ public class Main extends JFrame {
 		});
 	}
 	
-	
 	public void SubstituirTexto(String img) throws IOException {
 		
 		String nome = img.substring(img.length() - 6, img.length());
 		nomeImagem.setText(nome);
-		
-		//String arqProjeto = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\saida.txt";
-		String arqPessoal = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\saida.txt";
 	    
-	    BufferedReader texto = new BufferedReader(new InputStreamReader(new FileInputStream(arqPessoal), "UTF-8"));
+	    BufferedReader texto = new BufferedReader(new InputStreamReader(new FileInputStream(arq), "UTF-8"));
 	    String linha = new String(texto.readLine().getBytes(), "UTF-8");
 	    textOutput.setText(linha);
 	    texto.close();
@@ -95,8 +96,7 @@ public class Main extends JFrame {
 		imagem.setImage(imagem.getImage().getScaledInstance(lblimagem.getWidth(), lblimagem.getHeight(), java.awt.Image.SCALE_SMOOTH));
 		lblimagem.setIcon(imagem);
 		
-		//ImageIcon histo = new ImageIcon("C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\saida.png");
-		ImageIcon histo = new ImageIcon("H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\saida.png");
+		histo = new ImageIcon("H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\saida.png");
 		histo.setImage(histo.getImage().getScaledInstance(lblhistograma.getWidth(), lblhistograma.getHeight(), java.awt.Image.SCALE_SMOOTH));
 		lblhistograma.setIcon(histo);
 
@@ -104,22 +104,10 @@ public class Main extends JFrame {
 
 	public void ExecutarScriptPython(String saida) {
         try {
-
-        	String[] cmdProjeto = {
-        		      "python",
-        		      "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\main.py",
-        		      "--img",
-        		      saida
-        		    };
-        	String[] cmdPessoal = {
-	      		      "python",
-	      		      "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\main.py",
-	      		      "--img",
-	      		      saida
-      		    };
-		    Runtime.getRuntime().exec(cmdPessoal);
+        	cmdExec[3] = saida; 
+		    Runtime.getRuntime().exec(cmdExec);
 		    
-		    Thread.sleep(2000);
+		    Thread.sleep(2200);
 		    
 		    SubstituirTexto(saida);
 		    SubstituirImagem(saida);
@@ -131,14 +119,13 @@ public class Main extends JFrame {
 	}
 	
 	public void addMeioTopo(JPanel meio) {
+
 		Button btnEsq = new Button("Ler imagem");
 		//funcão de click para fazer a leitura da imagem
 		btnEsq.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView());
 				
-				//JFileChooser jfc = new JFileChooser("C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\imagens");	//pc Projeto
-				JFileChooser jfc = new JFileChooser("H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\imagens");	//pc pessoal
 				jfc.setDialogTitle("Choose a directory to save your file: teste ");
 				jfc.setAcceptAllFileFilterUsed(false);
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG, JPEG and JPG images", "png", "jpeg", "jpg");
@@ -147,13 +134,13 @@ public class Main extends JFrame {
 				int returnValue = jfc.showSaveDialog(null);
 				//JOptionPane.showMessageDialog(null, "Arquivo selecionado");
 				String saida = jfc.getSelectedFile().getPath() ;
-				System.out.print("voce selecionou essa imagem: "+ saida+"\n");
+				//System.out.print("voce selecionou essa imagem: "+ saida+"\n");
 				
 				//executar codigo em python
 				ExecutarScriptPython(saida);
 			}
 		});
-		meio_1.setLayout(new BoxLayout(meio_1, BoxLayout.X_AXIS));
+	
 		meio.add(btnEsq);
 //		JLabel iconConfirmar = new JLabel(new ImageIcon("./imagens/Seach_white.png"));
 //		BotaoPesquisar.add(iconConfirmar);
@@ -215,11 +202,10 @@ public class Main extends JFrame {
 		baixo.setPreferredSize(new Dimension(100, 20));
 		topo.add(baixo, BorderLayout.SOUTH);
 		
-		meio_1 = new JPanel();
-		topo.add(meio_1);
-		addMeioTopo(meio_1);
-		
-		
+		meio = new JPanel();
+		meio.setLayout(new BoxLayout(meio, BoxLayout.X_AXIS));
+		topo.add(meio);
+		addMeioTopo(meio);
 		
 	}
 	
@@ -254,10 +240,46 @@ public class Main extends JFrame {
 		
 	}
 	
+	public void definirDiretorios(int i) {
+		
+		if( i == 0 ) {//pessoal
+			//Funcao substituirTexto
+			arq = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\saida.txt";
+			//Funcao ExecutarScriptPython
+			String[] entrada = {
+	      		      "python",
+	      		      "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\main.py",
+	      		      "--img",
+	      		      ""
+    		    };
+			cmdExec = entrada;
+			//Funcao btnEsq.addActionListener
+			jfc = new JFileChooser("H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\imagens");	//pc pessoal
+			
+		}else { //projeto
+			//Funcao substituirTexto
+			arq = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\saida.txt";
+			//Funcao ExecutarScriptPython
+			String[] entrada = {
+      		      "python",
+      		      "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\main.py",
+      		      "--img",
+      		      ""
+      		    };
+			cmdExec = entrada;
+			//Funcao btnEsq.addActionListener
+			jfc = new JFileChooser("C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\imagens");	//pc Projeto
+		}
+
+	}
+	
 	/**
 	 * Create the frame.
 	 */
 	public Main() {
+		
+		definirDiretorios(0);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(900, 700);
 		
