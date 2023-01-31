@@ -3,14 +3,18 @@ import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 from pylab import *
+import sys
+from absl import app, flags, logging
+from absl.flags import FLAGS
 
+flags.DEFINE_string('img', None, 'path to image file')
 
-def histo(imagem, out):
+def histo(imagem):
     img = cv2.cvtColor(imagem, cv2.COLOR_RGB2GRAY)
     hist = cv2.calcHist([img], [0], None, [256], [0, 256]).astype(int)
-    # plt.plot(hist)
-    # plt.savefig(r"./saidas/hist.png")
-    # plt.show()
+    plt.plot(hist)
+    plt.savefig(r"C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\saida.png")
+    #plt.show()
 
     total = 0
     for i in range(len(hist)):
@@ -33,23 +37,34 @@ def resultado(hist):
         else:
             meio += hist[i]
 
+    # print("Esq ",parteE)
+    # print("Meio ", meio)
+    # print("Dir ",parteD )
+
+    f = open("C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\saida.txt", "w")    #projeto
+    # f = open("C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\saida.txt", "w")  #Pessoal
     if (parteD > parteE + meio):
-        f = open("./saidas/saida.txt", "w")
         f.write("Essa imagem tem superexposição")
         f.close()
+        print("Essa imagem tem superexposição")
     elif (parteE > parteD + meio):
-        f = open("./saidas/saida.txt", "w")
         f.write("Essa imagem tem suberexposição")
         f.close()
+        print("Essa imagem tem suberexposição")
     else:
-        f = open("./saidas/saida.txt", "w")
         f.write("É uma imagem normal")
         f.close()
+        print("É uma imagem normal")
 
-sol = cv2.imread("cidadeEscura.jpg")
-hist, total = histo(sol, 1)
-resultado(hist)
+def main(_args):
+    sol = cv2.imread(FLAGS.img)  # projeto
+    #sol = cv2.imread("./imagens/26.jpg")  # projeto
+    hist, total = histo(sol)
+    resultado(hist)
 
-# cv2.imshow("image",sol)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+
+if __name__ == '__main__':
+    try:
+        app.run(main)
+    except SystemExit:
+        pass
