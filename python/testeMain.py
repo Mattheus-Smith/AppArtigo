@@ -13,8 +13,8 @@ def histo(imagem):
     hist = cv2.calcHist([img], [0], None, [256], [0, 256]).astype(int)
     plt.plot(hist)
     #plt.savefig(r"C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\saida.png") #Projeto
-    plt.savefig(r"H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\saida.png") #pessoal
-    #plt.show()
+    #plt.savefig(r"H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\saida.png") #pessoal
+    plt.show()
 
     total = 0
     for i in range(len(hist)):
@@ -52,15 +52,47 @@ def resultado(hist):
         f.close()
         print("É uma imagem normal")
 
-def main(_args):
-    sol = cv2.imread(FLAGS.img)  # projeto
-    #sol = cv2.imread("./imagens/26.jpg")  # projeto
-    hist, total = histo(sol)
-    resultado(hist)
+def dividirHistograma(hist):
 
+    histDividido = np.array_split(hist, 10)
 
-if __name__ == '__main__':
-    try:
-        app.run(main)
-    except SystemExit:
-        pass
+    cont = 0
+    lista=[]
+    for i in range(0, 10):
+        somar=0
+        for j in range(0, len(histDividido[i])):
+            somar += int(histDividido[i][j])
+            cont +=1
+        lista.append(somar)
+    #print(lista)
+
+    return lista
+
+def identificarPicos(lista, total):
+    suber = lista[0]+lista[1]+lista[2]
+    dffSuber = total - suber
+
+    super = lista[7] + lista[8] + lista[9]
+    dffSuper = total - super
+
+    meio = lista[3] + lista[4] + lista[5] + lista[6]
+
+    if( suber > dffSuber ):
+        print("suber")
+    elif( super > dffSuper ):
+        print("super")
+    elif( super > meio and suber > meio ):
+        print("pico")
+    else:
+        print("normal")
+
+super = cv2.imread("./imagens/26.jpg")  # projeto
+suber = cv2.imread("./imagens/25.jpg")  # projeto
+picos = cv2.imread("./imagens/18.jpg")  # projeto
+normal = cv2.imread("./imagens/20.jpg")  # projeto
+
+teste = cv2.imread("./imagens/26.jpg")  # projeto
+
+hist, total = histo(teste)
+
+identificarPicos(dividirHistograma(hist), total)
