@@ -57,11 +57,15 @@ public class Main extends JFrame {
 	Label textOutput;
 	private JPanel meio;
 	
+	FuncoeExtras funcExtras;
+	
 	String arq;
 	ImageIcon histo;
+	ImageIcon imagem;
 	String[] cmdExec;
 	JFileChooser jfc;
-	
+	public String camImagem;
+	Button btnDrt;
 	
 	/**
 	 * Launch the application.
@@ -92,7 +96,7 @@ public class Main extends JFrame {
 	
 	public void SubstituirImagem(String img) throws IOException {
 		
-		ImageIcon imagem = new ImageIcon(img);
+		imagem = new ImageIcon(img);
 		imagem.setImage(imagem.getImage().getScaledInstance(lblimagem.getWidth(), lblimagem.getHeight(), java.awt.Image.SCALE_SMOOTH));
 		lblimagem.setIcon(imagem);
 		
@@ -102,22 +106,7 @@ public class Main extends JFrame {
 
 	}
 
-	public void ExecutarScriptPython(String saida) {
-        try {
-        	cmdExec[3] = saida; 
-		    Runtime.getRuntime().exec(cmdExec);
-		    
-		    Thread.sleep(2200);
-		    
-		    SubstituirTexto(saida);
-		    SubstituirImagem(saida);
 
-
-        } catch(Exception e) {
-            System.err.println(e);
-        }
-	}
-	
 	public void addMeioTopo(JPanel meio) {
 
 		Button btnEsq = new Button("Ler imagem");
@@ -135,52 +124,30 @@ public class Main extends JFrame {
 				//JOptionPane.showMessageDialog(null, "Arquivo selecionado");
 				String saida = jfc.getSelectedFile().getPath() ;
 				//System.out.print("voce selecionou essa imagem: "+ saida+"\n");
-				
+				camImagem = saida;
 				//executar codigo em python
-				ExecutarScriptPython(saida);
+				funcExtras.ExecutarScriptPython(saida);
+				
+				//funcão de click para fazer a leitura da imagem se estiver uma imagem armazenada
+				btnDrt.addActionListener((ActionListener) new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+						AplicacaoFiltro af = new AplicacaoFiltro(camImagem);
+						af.setVisible(true);
+					}
+				});
 			}
 		});
 	
 		meio.add(btnEsq);
-//		JLabel iconConfirmar = new JLabel(new ImageIcon("./imagens/Seach_white.png"));
-//		BotaoPesquisar.add(iconConfirmar);
-//		
-//		BotaoPesquisar.addMouseListener(new java.awt.event.MouseAdapter() {
-//		    public void mouseEntered(java.awt.event.MouseEvent evt) {
-//		    	BotaoPesquisar.setBackground(new Color(255, 255, 255));
-//		    	Botao.setForeground(new Color(0, 0, 51));	
-//		    	iconConfirmar.setIcon(new ImageIcon("./imagens/Seach_Black.png"));
-//		    }
-//		    public void mouseExited(java.awt.event.MouseEvent evt) {
-//		    	BackgroundBarraNav(BotaoPesquisar);
-//		    	Botao.setForeground(new Color(255, 255, 255));
-//		    	iconConfirmar.setIcon(new ImageIcon("./imagens/Seach_white.png"));
-//		    }
-//		});
 		
-		Label label_OU = new Label("OU");
+		Label label_OU = new Label();
 		label_OU.setAlignment(Label.CENTER);
 		label_OU.setFont(new Font("Yu Gothic", Font.BOLD, 15));
 		label_OU.setBounds(381, 50, 130, 90);
 		meio.add(label_OU);
 		
-		Button btnDrt = new Button("Escolher imagem aleatória");
-		//funcão de click para fazer a leitura da imagem
-		btnDrt.addActionListener((ActionListener) new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				File file = new File("C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\imagens");	//pc Projeto
-				File[] arquivos = file.listFiles();
-				
-				Random random = new Random();
-				int numero = random.nextInt(arquivos.length);
-				String saida = arquivos[numero].toString();
-				System.out.print("voce selecionou essa imagem: "+saida +"\n");
-				
-				//executar codigo em python
-				ExecutarScriptPython(saida);
-			}
-		});
+		btnDrt = new Button("Aplicar filtro");
 		meio.add(btnDrt);
 	}
 
@@ -240,45 +207,14 @@ public class Main extends JFrame {
 		
 	}
 	
-	public void definirDiretorios(int i) {
-		
-		if( i == 0 ) {//pessoal
-			//Funcao substituirTexto
-			arq = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\saida.txt";
-			//Funcao ExecutarScriptPython
-			String[] entrada = {
-	      		      "python",
-	      		      "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\main.py",
-	      		      "--img",
-	      		      ""
-    		    };
-			cmdExec = entrada;
-			//Funcao btnEsq.addActionListener
-			jfc = new JFileChooser("H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\imagens");	//pc pessoal
-			
-		}else { //projeto
-			//Funcao substituirTexto
-			arq = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\saida.txt";
-			//Funcao ExecutarScriptPython
-			String[] entrada = {
-      		      "python",
-      		      "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\main.py",
-      		      "--img",
-      		      ""
-      		    };
-			cmdExec = entrada;
-			//Funcao btnEsq.addActionListener
-			jfc = new JFileChooser("C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\imagens");	//pc Projeto
-		}
-
-	}
-	
 	/**
 	 * Create the frame.
 	 */
 	public Main() {
 		
-		definirDiretorios(0);
+		funcExtras = new FuncoeExtras(); 
+		
+		funcExtras.definirDiretorios(0);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(900, 700);
