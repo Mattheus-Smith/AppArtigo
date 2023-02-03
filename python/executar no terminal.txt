@@ -1,7 +1,5 @@
-python "C:\Users\Smith Fernandes\Documents\4 - github\AppArtigo\python\main.py" --img "C:\Users\Smith Fernandes\Documents\4 - github\AppArtigo\python\cidadeEscura.jpg"
+python "C:\Users\Smith Fernandes\Documents\4 - github\AppArtigo\python\main.py" --img "C:\Users\Smith Fernandes\Documents\4 - github\AppArtigo\python\imagens\14.jpg" --pc 1
 
 
-
-
-python "H:\SmithHD\Documentos\4-github\AppArtigo\python\main.py" --img "H:\SmithHD\Documentos\4-github\AppArtigo\python\imagens\23.jpg"
+python "H:\SmithHD\Documentos\4-github\AppArtigo\python\main.py" --img "H:\SmithHD\Documentos\4-github\AppArtigo\python\imagens\14.jpg" --pc 0
 

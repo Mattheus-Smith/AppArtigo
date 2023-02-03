@@ -51,13 +51,8 @@ public class Main extends JFrame {
 	ImageIcon histo;
 	ImageIcon imagem;
 	
+	String definirDiretorio;
 	FuncoeExtras funcExtras;
-	
-//	String arq;
-//	String[] cmdExec;
-//	JFileChooser jfc;
-//	public String camImagem;
-//	Button btnDrt;
 	
 	/**
 	 * Launch the application.
@@ -76,6 +71,14 @@ public class Main extends JFrame {
 		});
 	}
 	
+	public void funcRetirarIdDoTexto(String texto, String[] textoFiltrado) {
+		String id = texto.substring(0,1);
+		String saida =  texto.substring(2,texto.length());
+		
+		textoFiltrado[0] = id;
+		textoFiltrado[1] = saida;
+	}
+	
 	public void SubstituirTexto(String img) throws IOException {
 		
 		String nome = img.substring(img.length() - 6, img.length());
@@ -83,23 +86,27 @@ public class Main extends JFrame {
 	    
 	    BufferedReader texto = new BufferedReader(new InputStreamReader(new FileInputStream(funcExtras.arq), "UTF-8"));
 	    String linha = new String(texto.readLine().getBytes(), "UTF-8");
-	    textOutput.setText(linha);
+	    
+	    String[] textoFiltrado = {"",""};
+	    funcRetirarIdDoTexto(linha, textoFiltrado);
+	    
+	    funcExtras.tipoProblema = textoFiltrado[0];
+	    textOutput.setText(textoFiltrado[1]);
 	    texto.close();
 	}
 	
 	public void SubstituirImagem(String img) throws IOException {
 		
 		imagem = new ImageIcon(img);
-		imagem.setImage(imagem.getImage().getScaledInstance(funcExtras.lblimagem.getWidth(), funcExtras.lblimagem.getHeight(), java.awt.Image.SCALE_SMOOTH));
-		funcExtras.lblimagem.setIcon(imagem);
+		imagem.setImage(imagem.getImage().getScaledInstance(lblimagem.getWidth(), lblimagem.getHeight(), java.awt.Image.SCALE_SMOOTH));
+		lblimagem.setIcon(imagem);
 		
-		histo = new ImageIcon("H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\saida.png");
-		histo.setImage(histo.getImage().getScaledInstance(funcExtras.lblhistograma.getWidth(), funcExtras.lblhistograma.getHeight(), java.awt.Image.SCALE_SMOOTH));
-		funcExtras.lblhistograma.setIcon(histo);
+		histo = new ImageIcon(funcExtras.camHistoOriginal);
+		histo.setImage(histo.getImage().getScaledInstance(lblhistograma.getWidth(), lblhistograma.getHeight(), java.awt.Image.SCALE_SMOOTH));
+		lblhistograma.setIcon(histo);
 
 	}
 
-	
 	public void addMeioTopo(JPanel meio) {
 
 		Button btnEsq = new Button("Ler imagem");
@@ -119,7 +126,7 @@ public class Main extends JFrame {
 				//System.out.print("voce selecionou essa imagem: "+ saida+"\n");
 				funcExtras.camImagem = saida;
 				//executar codigo em python
-				funcExtras.ExecutarScriptPython(saida);
+				funcExtras.ExecutarScriptPython(saida, definirDiretorio);
 				
 				try {
 					SubstituirTexto(saida);
@@ -186,8 +193,8 @@ public class Main extends JFrame {
 		nomeImagem.setFont(new Font("Yu Gothic", Font.BOLD, 24));
 		infoDireita.add(nomeImagem, BorderLayout.NORTH);
 		
-		funcExtras.lblhistograma = new JLabel();
-		infoDireita.add(funcExtras.lblhistograma, BorderLayout.CENTER);
+		lblhistograma = new JLabel();
+		infoDireita.add(lblhistograma, BorderLayout.CENTER);
 		
 		textOutput = new Label();
 		textOutput.setAlignment(Label.CENTER);
@@ -197,10 +204,9 @@ public class Main extends JFrame {
 		
 	}
 	
-	
 	public void addCentro(JPanel centro) {
-		funcExtras.lblimagem = new JLabel();
-		centro.add(funcExtras.lblimagem);
+		lblimagem = new JLabel();
+		centro.add(lblimagem);
 		
 		infoDireita = new JPanel();
 		infoDireita.setLayout(new BorderLayout(0, 0));
@@ -215,9 +221,10 @@ public class Main extends JFrame {
 	 */
 	public Main() {
 		
-		funcExtras = new FuncoeExtras(); 
+		this.definirDiretorio = "1";
 		
-		funcExtras.definirDiretorios(0);
+		funcExtras = new FuncoeExtras(); 
+		funcExtras.definirDiretorios(this.definirDiretorio);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(900, 700);

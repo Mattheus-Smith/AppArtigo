@@ -1,0 +1,11 @@
+	SUPER
+funcionSquare(cidadeClara, 0, 0.003)
+#def funcionSquare (imagem, out, A):
+res = funcionSquare(cidadeClara, 1, 0.003)
+#def functionEqualization(imagem, out):
+functionEqualization(res,0)
+
+	SUBER
+
+#def funcitonPiecewiseLinear(imagen, out, Ainicio, Amedio, Afim, grauInicio, grauMedio, grauFim):
+funcitonPiecewiseLinear(cidadeEscura, 0,   1.8,1 ,0.97,   45,120,255,   235)

@@ -13,23 +13,25 @@ import javax.swing.JLabel;
 
 public class FuncoeExtras {
 	
-	JLabel lblimagem;
-	JLabel lblhistograma;
 	Label nomeImagem;
 	Label textOutput;
 	
-	String arq;
 	ImageIcon histo;
 	ImageIcon imagem;
 	String[] cmdExecEntrada;
 	String[] cmdExecFiltro;
 	JFileChooser jfc;
+	
+	String arq;
+	String tipoProblema;
+	public String camHistoOriginal;
 	public String camImagem;
 	public String camImagemEditada;
 	
-	public void definirDiretorios(int i) {
+	public void definirDiretorios(String i) {
 		
-		if( i == 0 ) {//pessoal
+		if( i == "0" ) {//pessoal
+			camHistoOriginal = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\saida.png";
 			//Funcao substituirTexto
 			arq = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\saida.txt";
 			//Funcao ExecutarScriptPython
@@ -37,6 +39,8 @@ public class FuncoeExtras {
 	      		      "python",
 	      		      "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\main.py",
 	      		      "--img",
+	      		      "",
+	      		      "--pc",
 	      		      ""
     		    };
 			cmdExecEntrada = entrada;
@@ -45,14 +49,21 @@ public class FuncoeExtras {
 	      		      "python",
 	      		      "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\filtro.py",
 	      		      "--img",
+	      		      "",
+	      		      "--pc",
+	      		      "",
+	      		      "--problema",
 	      		      ""
   		    };
 			cmdExecFiltro = filtro;
+			camImagemEditada = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\imgFiltrada.png";
 			
 			//Funcao btnEsq.addActionListener
 			jfc = new JFileChooser("H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\imagens");	//pc pessoal
 			
 		}else { //projeto
+			//Funcao substituirImagem
+			camHistoOriginal = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\saida.png";
 			//Funcao substituirTexto
 			arq = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\saida.txt";
 			//Funcao ExecutarScriptPython
@@ -60,7 +71,9 @@ public class FuncoeExtras {
       		      "python",
       		      "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\main.py",
       		      "--img",
-      		      ""
+      		      "",
+      		      "--pc",
+    		      ""
       		    };
 			cmdExecEntrada = entrada;
 			
@@ -68,18 +81,24 @@ public class FuncoeExtras {
 	      		      "python",
 	      		      "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\filtro.py",
 	      		      "--img",
-	      		      ""
+	      		      "",
+	      		      "--pc",
+	      		      "",
+	      		      "--problema",
+	      		      "1"
 		    };
 			cmdExecFiltro = filtro;
+			camImagemEditada = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\imgFiltrada.png";
 			//Funcao btnEsq.addActionListener
 			jfc = new JFileChooser("C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\imagens");	//pc Projeto
 		}
 
 	}
 	
-	public void ExecutarScriptPython(String saida) {
+	public void ExecutarScriptPython(String saida, String pc) {
         try {
         	cmdExecEntrada[3] = saida; 
+        	cmdExecEntrada[5] = pc; 
 		    Runtime.getRuntime().exec(cmdExecEntrada);
 		    
 		    Thread.sleep(2200);
@@ -89,9 +108,11 @@ public class FuncoeExtras {
         }
 	}
 	
-	public void ExeScriptPythonFiltro(String saida) {
+	public void ExeScriptPythonFiltro(String saida, String pc, String problema) {
         try {
         	cmdExecFiltro[3] = saida; 
+        	cmdExecEntrada[5] = pc; 
+        	//cmdExecEntrada[7] = problema; 
 		    Runtime.getRuntime().exec(cmdExecFiltro);
 		    
 		    Thread.sleep(2200);

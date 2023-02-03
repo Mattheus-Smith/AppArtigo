@@ -16,6 +16,7 @@ public class AplicacaoFiltro extends JFrame {
 	private JPanel Frame;
 	public String camImagem;
 	FuncoeExtras funcExtras;
+	String definirDiretorio;
 
 	/**
 	 * Launch the application.
@@ -33,19 +34,15 @@ public class AplicacaoFiltro extends JFrame {
 		});
 	}
 	
-
-
-	
-	
 	public void addCentro(JPanel centro) {
-		JPanel Esq = new JPanel();centro.add(Esq, BorderLayout.WEST);Esq.setPreferredSize(new Dimension(100, 100));
-		JPanel cima = new JPanel();centro.add(cima, BorderLayout.NORTH);cima.setPreferredSize(new Dimension(100, 100));
-		JPanel dir = new JPanel();centro.add(dir, BorderLayout.EAST);dir.setPreferredSize(new Dimension(100, 100));
-		JPanel baixo = new JPanel();centro.add(baixo, BorderLayout.SOUTH);baixo.setPreferredSize(new Dimension(100, 100));
+		JPanel Esq = new JPanel();centro.add(Esq, BorderLayout.WEST);Esq.setPreferredSize(new Dimension(50, 50));
+		JPanel cima = new JPanel();centro.add(cima, BorderLayout.NORTH);cima.setPreferredSize(new Dimension(50, 50));
+		JPanel dir = new JPanel();centro.add(dir, BorderLayout.EAST);dir.setPreferredSize(new Dimension(50, 50));
+		JPanel baixo = new JPanel();centro.add(baixo, BorderLayout.SOUTH);baixo.setPreferredSize(new Dimension(50, 50));
 		
 		JPanel meio = new JPanel();
 		centro.add(meio, BorderLayout.CENTER);
-		meio.setLayout(new GridLayout(1, 0, 0, 0));
+		meio.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		JLabel imgOriginal = new JLabel();
 		meio.add(imgOriginal);
@@ -53,20 +50,25 @@ public class AplicacaoFiltro extends JFrame {
 		JLabel imgEditada = new JLabel();
 		meio.add(imgEditada);
 		
-		funcExtras.ExeScriptPythonFiltro(funcExtras.camImagem);
+		funcExtras.ExeScriptPythonFiltro(funcExtras.camImagem, definirDiretorio, funcExtras.tipoProblema);
 		
 		ImageIcon imagem = new ImageIcon(funcExtras.camImagem);
 		imagem.setImage(imagem.getImage().getScaledInstance(200, 200, java.awt.Image.SCALE_SMOOTH));
 		imgOriginal.setIcon(imagem);
+		
+		ImageIcon imagemEditada = new ImageIcon(funcExtras.camImagemEditada);
+		imagemEditada.setImage(imagemEditada.getImage().getScaledInstance(200, 200, java.awt.Image.SCALE_SMOOTH));
+		imgEditada.setIcon(imagemEditada);
 	}
 	
 	
 	public void inicializeFrame() {
 		
-		funcExtras.definirDiretorios(0);
+		this.definirDiretorio = "1";
+		funcExtras.definirDiretorios(this.definirDiretorio);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(400, 400);
+		setSize(900, 700);
 		
 		Frame = new JPanel();
 		setContentPane(Frame);
