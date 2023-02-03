@@ -7,13 +7,20 @@ from absl import app, flags, logging
 from absl.flags import FLAGS
 
 flags.DEFINE_string('img', None, 'path to image file')
+flags.DEFINE_string('pc', None, 'identifiy wich pc')
 
-def histo(imagem):
+
+def mudarDiretorios(dirPlot):
+    if (FLAGS.pc == 0):#pessoal
+        dirPlot = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\saida.png"
+    elif (FLAGS.pc == 1):#projeto
+        dirPlot = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\saida.png"
+
+def histo(imagem, dirPlot):
     img = cv2.cvtColor(imagem, cv2.COLOR_RGB2GRAY)
     hist = cv2.calcHist([img], [0], None, [256], [0, 256]).astype(int)
     plt.plot(hist)
-    #plt.savefig(r"C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\saida.png") #Projeto
-    #plt.savefig(r"H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\saida.png") #pessoal
+    plt.savefig(fname=dirPlot) #Projeto
     plt.show()
 
     total = 0
@@ -86,13 +93,30 @@ def identificarPicos(lista, total):
     else:
         print("normal")
 
-super = cv2.imread("./imagens/26.jpg")  # projeto
-suber = cv2.imread("./imagens/25.jpg")  # projeto
-picos = cv2.imread("./imagens/18.jpg")  # projeto
-normal = cv2.imread("./imagens/20.jpg")  # projeto
+# super = cv2.imread("./imagens/26.jpg")  # projeto
+# suber = cv2.imread("./imagens/25.jpg")  # projeto
+# picos = cv2.imread("./imagens/18.jpg")  # projeto
+# normal = cv2.imread("./imagens/20.jpg")  # projeto
+#
+# teste = cv2.imread("./imagens/26.jpg")  # projeto
+#
+# hist, total = histo(teste)
+#
+# identificarPicos(dividirHistograma(hist), total)
 
-teste = cv2.imread("./imagens/26.jpg")  # projeto
+def main(_args):
 
-hist, total = histo(teste)
+    dirPlot = ""
+    mudarDiretorios(dirPlot)
 
-identificarPicos(dividirHistograma(hist), total)
+    sol = cv2.imread(FLAGS.img)  # projeto
+    #sol = cv2.imread("./imagens/26.jpg")  # projeto
+    hist, total = histo(sol, dirPlot)
+    resultado(hist)
+
+
+if __name__ == '__main__':
+    try:
+        app.run(main)
+    except SystemExit:
+        pass

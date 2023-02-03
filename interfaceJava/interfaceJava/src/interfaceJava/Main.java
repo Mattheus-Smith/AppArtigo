@@ -3,8 +3,7 @@ package interfaceJava;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.util.Random;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
@@ -14,14 +13,8 @@ import javax.swing.text.StyleConstants;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-
-import javax.swing.JButton;
 import java.awt.GridLayout;
 import java.awt.Insets;
-
-import javax.swing.JTextPane;
-import javax.swing.SwingConstants;
-
 import java.awt.Button;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
@@ -30,8 +23,6 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
-
-import javax.swing.Box;
 import java.awt.Font;
 
 import javax.imageio.ImageIO;
@@ -46,30 +37,32 @@ public class Main extends JFrame {
     static Process pro;
     static BufferedReader read;
 	private JPanel Frame;
-	JLabel lblimagem;
-	JLabel lblhistograma;
 	JPanel panel;
 	JPanel topo;
 	JPanel centro;
 	JPanel footer;
 	JPanel infoDireita;
+	JPanel meio;
+	Button btnDrt;
 	Label nomeImagem;
 	Label textOutput;
-	private JPanel meio;
+	JLabel lblimagem;
+	JLabel lblhistograma;
+	ImageIcon histo;
+	ImageIcon imagem;
 	
 	FuncoeExtras funcExtras;
 	
-	String arq;
-	ImageIcon histo;
-	ImageIcon imagem;
-	String[] cmdExec;
-	JFileChooser jfc;
-	public String camImagem;
-	Button btnDrt;
+//	String arq;
+//	String[] cmdExec;
+//	JFileChooser jfc;
+//	public String camImagem;
+//	Button btnDrt;
 	
 	/**
 	 * Launch the application.
 	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -88,7 +81,7 @@ public class Main extends JFrame {
 		String nome = img.substring(img.length() - 6, img.length());
 		nomeImagem.setText(nome);
 	    
-	    BufferedReader texto = new BufferedReader(new InputStreamReader(new FileInputStream(arq), "UTF-8"));
+	    BufferedReader texto = new BufferedReader(new InputStreamReader(new FileInputStream(funcExtras.arq), "UTF-8"));
 	    String linha = new String(texto.readLine().getBytes(), "UTF-8");
 	    textOutput.setText(linha);
 	    texto.close();
@@ -97,16 +90,16 @@ public class Main extends JFrame {
 	public void SubstituirImagem(String img) throws IOException {
 		
 		imagem = new ImageIcon(img);
-		imagem.setImage(imagem.getImage().getScaledInstance(lblimagem.getWidth(), lblimagem.getHeight(), java.awt.Image.SCALE_SMOOTH));
-		lblimagem.setIcon(imagem);
+		imagem.setImage(imagem.getImage().getScaledInstance(funcExtras.lblimagem.getWidth(), funcExtras.lblimagem.getHeight(), java.awt.Image.SCALE_SMOOTH));
+		funcExtras.lblimagem.setIcon(imagem);
 		
 		histo = new ImageIcon("H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\saida.png");
-		histo.setImage(histo.getImage().getScaledInstance(lblhistograma.getWidth(), lblhistograma.getHeight(), java.awt.Image.SCALE_SMOOTH));
-		lblhistograma.setIcon(histo);
+		histo.setImage(histo.getImage().getScaledInstance(funcExtras.lblhistograma.getWidth(), funcExtras.lblhistograma.getHeight(), java.awt.Image.SCALE_SMOOTH));
+		funcExtras.lblhistograma.setIcon(histo);
 
 	}
 
-
+	
 	public void addMeioTopo(JPanel meio) {
 
 		Button btnEsq = new Button("Ler imagem");
@@ -115,24 +108,32 @@ public class Main extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView());
 				
-				jfc.setDialogTitle("Choose a directory to save your file: teste ");
-				jfc.setAcceptAllFileFilterUsed(false);
+				funcExtras.jfc.setDialogTitle("Choose a directory to save your file: teste ");
+				funcExtras.jfc.setAcceptAllFileFilterUsed(false);
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG, JPEG and JPG images", "png", "jpeg", "jpg");
-				jfc.setFileFilter(filter);
+				funcExtras.jfc.setFileFilter(filter);
 
-				int returnValue = jfc.showSaveDialog(null);
+				int returnValue = funcExtras.jfc.showSaveDialog(null);
 				//JOptionPane.showMessageDialog(null, "Arquivo selecionado");
-				String saida = jfc.getSelectedFile().getPath() ;
+				String saida = funcExtras.jfc.getSelectedFile().getPath() ;
 				//System.out.print("voce selecionou essa imagem: "+ saida+"\n");
-				camImagem = saida;
+				funcExtras.camImagem = saida;
 				//executar codigo em python
 				funcExtras.ExecutarScriptPython(saida);
+				
+				try {
+					SubstituirTexto(saida);
+					SubstituirImagem(saida);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 				//funcão de click para fazer a leitura da imagem se estiver uma imagem armazenada
 				btnDrt.addActionListener((ActionListener) new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						
-						AplicacaoFiltro af = new AplicacaoFiltro(camImagem);
+						AplicacaoFiltro af = new AplicacaoFiltro(funcExtras);
 						af.setVisible(true);
 					}
 				});
@@ -150,6 +151,7 @@ public class Main extends JFrame {
 		btnDrt = new Button("Aplicar filtro");
 		meio.add(btnDrt);
 	}
+	
 
 	public void addTopo(JPanel topo) {
 		
@@ -184,8 +186,8 @@ public class Main extends JFrame {
 		nomeImagem.setFont(new Font("Yu Gothic", Font.BOLD, 24));
 		infoDireita.add(nomeImagem, BorderLayout.NORTH);
 		
-		lblhistograma = new JLabel();
-		infoDireita.add(lblhistograma, BorderLayout.CENTER);
+		funcExtras.lblhistograma = new JLabel();
+		infoDireita.add(funcExtras.lblhistograma, BorderLayout.CENTER);
 		
 		textOutput = new Label();
 		textOutput.setAlignment(Label.CENTER);
@@ -195,9 +197,10 @@ public class Main extends JFrame {
 		
 	}
 	
+	
 	public void addCentro(JPanel centro) {
-		lblimagem = new JLabel();
-		centro.add(lblimagem);
+		funcExtras.lblimagem = new JLabel();
+		centro.add(funcExtras.lblimagem);
 		
 		infoDireita = new JPanel();
 		infoDireita.setLayout(new BorderLayout(0, 0));

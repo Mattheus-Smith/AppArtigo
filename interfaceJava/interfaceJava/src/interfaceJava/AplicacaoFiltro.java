@@ -15,6 +15,7 @@ public class AplicacaoFiltro extends JFrame {
 
 	private JPanel Frame;
 	public String camImagem;
+	FuncoeExtras funcExtras;
 
 	/**
 	 * Launch the application.
@@ -31,22 +32,9 @@ public class AplicacaoFiltro extends JFrame {
 			}
 		});
 	}
-
-	public void ExecutarScriptPython(String saida) {
-        try {
-        	cmdExec[3] = saida; 
-		    Runtime.getRuntime().exec(cmdExec);
-		    
-		    Thread.sleep(2200);
-		    
-		    SubstituirTexto(saida);
-		    SubstituirImagem(saida);
+	
 
 
-        } catch(Exception e) {
-            System.err.println(e);
-        }
-	}
 	
 	
 	public void addCentro(JPanel centro) {
@@ -59,20 +47,24 @@ public class AplicacaoFiltro extends JFrame {
 		centro.add(meio, BorderLayout.CENTER);
 		meio.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		JLabel imgOriginal = new JLabel("Img Original");
+		JLabel imgOriginal = new JLabel();
 		meio.add(imgOriginal);
 		
-		JLabel imgEditada = new JLabel("Img Editada");
+		JLabel imgEditada = new JLabel();
 		meio.add(imgEditada);
 		
-		ExecutarScriptPython(this.camImagem);
+		funcExtras.ExeScriptPythonFiltro(funcExtras.camImagem);
 		
-		ImageIcon imagem = new ImageIcon(this.camImagem);
+		ImageIcon imagem = new ImageIcon(funcExtras.camImagem);
 		imagem.setImage(imagem.getImage().getScaledInstance(200, 200, java.awt.Image.SCALE_SMOOTH));
 		imgOriginal.setIcon(imagem);
 	}
 	
+	
 	public void inicializeFrame() {
+		
+		funcExtras.definirDiretorios(0);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(400, 400);
 		
@@ -95,9 +87,8 @@ public class AplicacaoFiltro extends JFrame {
 		inicializeFrame();	
 	}
 	
-	public AplicacaoFiltro(String cam) {			
-		
-		this.camImagem = cam;
+	public AplicacaoFiltro(FuncoeExtras funcE) {			
+		this.funcExtras = funcE;
 		inicializeFrame();
 	}
 }
