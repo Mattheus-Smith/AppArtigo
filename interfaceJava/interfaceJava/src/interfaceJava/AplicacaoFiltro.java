@@ -42,22 +42,24 @@ public class AplicacaoFiltro extends JFrame {
 		
 		JPanel meio = new JPanel();
 		centro.add(meio, BorderLayout.CENTER);
-		meio.setLayout(new GridLayout(0, 2, 0, 0));
+		meio.setLayout(null);
 		
 		JLabel imgOriginal = new JLabel();
+		imgOriginal.setLocation(0, 0);
+		imgOriginal.setSize(new Dimension(392, 561));
 		meio.add(imgOriginal);
 		
 		JLabel imgEditada = new JLabel();
+		imgEditada.setBounds(392, 0, 392, 561);
+		imgEditada.setPreferredSize(new Dimension(50, 50));
 		meio.add(imgEditada);
 		
-		funcExtras.ExeScriptPythonFiltro(funcExtras.camImagem, definirDiretorio, funcExtras.tipoProblema);
-		
 		ImageIcon imagem = new ImageIcon(funcExtras.camImagem);
-		imagem.setImage(imagem.getImage().getScaledInstance(200, 200, java.awt.Image.SCALE_SMOOTH));
+		imagem.setImage(imagem.getImage().getScaledInstance(imgOriginal.getWidth(), imgOriginal.getHeight(), java.awt.Image.SCALE_SMOOTH));
 		imgOriginal.setIcon(imagem);
 		
 		ImageIcon imagemEditada = new ImageIcon(funcExtras.camImagemEditada);
-		imagemEditada.setImage(imagemEditada.getImage().getScaledInstance(200, 200, java.awt.Image.SCALE_SMOOTH));
+		imagemEditada.setImage(imagemEditada.getImage().getScaledInstance(imgEditada.getWidth(), imgEditada.getHeight(), java.awt.Image.SCALE_SMOOTH));
 		imgEditada.setIcon(imagemEditada);
 	}
 	
@@ -67,12 +69,14 @@ public class AplicacaoFiltro extends JFrame {
 		this.definirDiretorio = "0";
 		funcExtras.definirDiretorios(this.definirDiretorio);
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(900, 700);
 		
 		Frame = new JPanel();
 		setContentPane(Frame);
 		Frame.setLayout(new BorderLayout(0, 0));
+		
+		funcExtras.ExeScriptPythonFiltro(funcExtras.camImagem, definirDiretorio, funcExtras.tipoProblema);
 		
 		JPanel centro = new JPanel();
 		Frame.add(centro, BorderLayout.CENTER);

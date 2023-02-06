@@ -13,15 +13,27 @@ flags.DEFINE_string('problema', None, 'identify which filter we are going to use
 def mudarDiretorios():
     if (FLAGS.pc == "0"):#pessoa
         dirTxt = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\imgFiltrada.png"
+        dirTxtOutput= "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\flagOutput.txt"
     elif (FLAGS.pc == "1"):#projeto
         dirTxt = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\imgFiltrada.png"
+        dirTxtOutput="a"
 
-    return dirTxt
+    return dirTxt, dirTxtOutput
 
-def funcionSquare (imagem, A, dirTxt):
-    imgI = imagem.copy()  # leitura da imagem em escala de cinza
+def functionEqualization(imagem):
+    #aplicando a equalização pelo histograma
+    img_yuv = cv2.cvtColor(imagem, cv2.COLOR_BGR2YUV)
 
-    img = cv2.cvtColor(imgI, cv2.COLOR_RGB2GRAY)
+    # equalize the histogram of the Y channel
+    img_yuv[:,:,0] = cv2.equalizeHist(img_yuv[:,:,0])
+
+    # convert the YUV image back to RGB format
+    equ = cv2.cvtColor(img_yuv, cv2.COLOR_YUV2BGR)
+
+    return equ      #cv2_imshow(res)
+
+def funcionSquare (imagem, A):
+    img = cv2.cvtColor(imagem, cv2.COLOR_RGB2GRAY)
     height, width = img.shape  # dimensões da imagem
 
     if (A == 0 ):
@@ -30,7 +42,7 @@ def funcionSquare (imagem, A, dirTxt):
     # transformação Quadratica
     for i in range(0, height):
         for j in range(0, width):
-            pixel = imgI[i, j].astype(int)
+            pixel = imagem[i, j].astype(int)
             saida = A * np.square(pixel)
 
             if( saida[0] >= 255 ):
@@ -39,17 +51,22 @@ def funcionSquare (imagem, A, dirTxt):
                 saida[1] = 255
             if (saida[2] >= 255):
                 saida[2] = 255
-            imgI[i,j] = saida
+            imagem[i,j] = saida
 
-    cv2.imwrite(dirTxt, imgI)
+    return imagem
 
+def filtro1(img,dirTxt, dirTxtOutput):
+    imgSquare = funcionSquare(img, 0.003)
+    output = functionEqualization(imgSquare)
+    cv2.imwrite(dirTxt, output)
 
-def filtro1(img,dirTxt):
-    funcionSquare(img, 0.003, dirTxt)
+    f = open(dirTxtOutput, "w")  # Pessoal
+    f.write("1")
+    f.close()
 
-def aplicarFiltro(img, dirTxt):
+def aplicarFiltro(img, dirTxt, dirTxtOutput):
     if(FLAGS.problema == "1"): #aplicar filtro de superexposição
-        filtro1(img,dirTxt)
+        filtro1(img.copy(),dirTxt, dirTxtOutput)
     elif (FLAGS.problema == "2"):  # aplicar filtro de suberexposição
         a = 1
     elif (FLAGS.problema == "3"):  # aplicar filtro de dois pico
@@ -59,7 +76,7 @@ def aplicarFiltro(img, dirTxt):
 
 def main(_args):
 
-    dirTxt = mudarDiretorios()
+    dirTxt, dirTxtOutput= mudarDiretorios()
     imgEntrada = cv2.imread(FLAGS.img)  # projeto
 
     aplicarFiltro(imgEntrada, dirTxt)

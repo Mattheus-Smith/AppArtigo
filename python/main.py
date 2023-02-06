@@ -32,35 +32,6 @@ def histo(imagem, dirPlot):
 
     return hist, total
 
-def resultado(hist, dirTxt):
-    porcetagem = 0.5
-    parteE = 0;
-    parteD = 0
-
-    for i in range(len(hist)):
-        if (i < int(len(hist) * porcetagem)):
-            parteE += hist[i]
-        elif (i > int(len(hist) * porcetagem)):
-            parteD += hist[i]
-
-    # print("Esq ",parteE)
-    # print("Meio ", meio)
-    # print("Dir ",parteD )
-
-    f = open(dirTxt, "w")  #Pessoal
-    if (parteD > parteE):
-        f.write("1 Essa imagem tem superexposição")
-        f.close()
-        print("1 Essa imagem tem superexposição")
-    elif (parteE > parteD):
-        f.write("2 Essa imagem tem suberexposição")
-        f.close()
-        print("2 Essa imagem tem suberexposição")
-    else:
-        f.write("3 É uma imagem normal")
-        f.close()
-        print("3 É uma imagem normal")
-
 def dividirHistograma(hist):
 
     histDividido = np.array_split(hist, 10)
@@ -104,17 +75,6 @@ def identificarPicos(lista, total, dirTxt):
         f.close()
         print("4 E uma imagem normal")
 
-# super = cv2.imread("./imagens/26.jpg")  # projeto
-# suber = cv2.imread("./imagens/25.jpg")  # projeto
-# picos = cv2.imread("./imagens/18.jpg")  # projeto
-# normal = cv2.imread("./imagens/20.jpg")  # projeto
-#
-# teste = cv2.imread("./imagens/26.jpg")  # projeto
-#
-# hist, total = histo(teste)
-#
-# identificarPicos(dividirHistograma(hist), total)
-
 def main(_args):
 
     dirPlot, dirTxt = mudarDiretorios()
@@ -124,8 +84,6 @@ def main(_args):
     hist, total = histo(sol, dirPlot)
 
     identificarPicos(dividirHistograma(hist), total, dirTxt)
-    #resultado(hist, dirTxt)
-
 
 if __name__ == '__main__':
     try:

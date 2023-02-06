@@ -127,7 +127,6 @@ public class Main extends JFrame {
 				funcExtras.camImagem = saida;
 				//executar codigo em python
 				funcExtras.ExecutarScriptPython(saida, definirDiretorio);
-				
 				try {
 					SubstituirTexto(saida);
 					SubstituirImagem(saida);
@@ -159,7 +158,6 @@ public class Main extends JFrame {
 		meio.add(btnDrt);
 	}
 	
-
 	public void addTopo(JPanel topo) {
 		
 		JPanel drt = new JPanel();
@@ -201,7 +199,6 @@ public class Main extends JFrame {
 		textOutput.setPreferredSize(new Dimension(100, 80));
 		textOutput.setFont(new Font("Yu Gothic", Font.BOLD, 24));
 		infoDireita.add(textOutput, BorderLayout.SOUTH);
-		
 	}
 	
 	public void addCentro(JPanel centro) {
@@ -244,6 +241,7 @@ public class Main extends JFrame {
 		centro.setLayout(new GridLayout(0, 2, 0, 0));
 		centro.setPreferredSize(new Dimension(100, 100));
 		addCentro(centro);
+		
 		Frame.add(centro, BorderLayout.CENTER);
 	}
 }

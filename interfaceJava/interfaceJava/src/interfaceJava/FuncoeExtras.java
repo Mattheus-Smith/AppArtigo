@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -24,12 +25,27 @@ public class FuncoeExtras {
 	
 	String arq;
 	String tipoProblema;
+	String flagOutput;
 	public String camHistoOriginal;
 	public String camImagem;
 	public String camImagemEditada;
 	
+	public void verificarSaida() throws UnsupportedEncodingException, IOException {
+		BufferedReader texto = new BufferedReader(new InputStreamReader(new FileInputStream(flagOutput), "UTF-8"));
+	    String linha = new String(texto.readLine().getBytes(), "UTF-8");
+	    
+	    while( linha != "1" ) {
+	    	if(  linha == "1" ) {
+	    		break;
+	    	}
+	    	texto = new BufferedReader(new InputStreamReader(new FileInputStream(flagOutput), "UTF-8"));
+		    linha = new String(texto.readLine().getBytes(), "UTF-8");
+	    	
+	    }
+	}
+	
 	public void definirDiretorios(String i) {
-		
+		flagOutput = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\flagOutput.txt";
 		if( i == "0" ) {//pessoal
 			camHistoOriginal = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\saida.png";
 			//Funcao substituirTexto
@@ -73,7 +89,7 @@ public class FuncoeExtras {
       		      "--img",
       		      "",
       		      "--pc",
-    		      ""
+    		      "",
       		    };
 			cmdExecEntrada = entrada;
 			
@@ -111,11 +127,12 @@ public class FuncoeExtras {
 	public void ExeScriptPythonFiltro(String saida, String pc, String problema) {
         try {
         	cmdExecFiltro[3] = saida; 
-        	cmdExecEntrada[5] = pc; 
+        	cmdExecFiltro[5] = pc; 
         	//cmdExecEntrada[7] = problema; 
+        	
 		    Runtime.getRuntime().exec(cmdExecFiltro);
 		    
-		    Thread.sleep(2200);
+		    verificarSaida();
 
         } catch(Exception e) {
             System.err.println(e);
