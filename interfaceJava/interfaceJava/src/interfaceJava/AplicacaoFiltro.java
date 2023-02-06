@@ -64,7 +64,7 @@ public class AplicacaoFiltro extends JFrame {
 	
 	public void inicializeFrame() {
 		
-		this.definirDiretorio = "1";
+		this.definirDiretorio = "0";
 		funcExtras.definirDiretorios(this.definirDiretorio);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

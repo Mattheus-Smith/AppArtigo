@@ -221,7 +221,7 @@ public class Main extends JFrame {
 	 */
 	public Main() {
 		
-		this.definirDiretorio = "1";
+		this.definirDiretorio = "0";
 		
 		funcExtras = new FuncoeExtras(); 
 		funcExtras.definirDiretorios(this.definirDiretorio);

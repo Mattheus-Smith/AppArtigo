@@ -53,7 +53,7 @@ public class FuncoeExtras {
 	      		      "--pc",
 	      		      "",
 	      		      "--problema",
-	      		      ""
+	      		      "1"
   		    };
 			cmdExecFiltro = filtro;
 			camImagemEditada = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\imgFiltrada.png";
