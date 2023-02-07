@@ -73,6 +73,10 @@ def identificarPicos(lista, total, dirClassificacaoEntrada, i):
     dffSuper = total - super
 
     meio = lista[3] + lista[4] + lista[5] + lista[6]
+
+    if i<10:
+        i = str(0)+ str(i)
+
     output = dirClassificacaoEntrada+str(i)+".txt"
     f = open(output, "w")  # Pessoal
 
@@ -149,19 +153,20 @@ def aplicarFiltro(listaImagensEntrada, dirClassificacaoEntrada, dirImgSaida):
 
         img = cv2.imread(listaImagensEntrada[i])
 
-        if (problema == "1"):  # aplicar filtro de superexposição
-            print("peguei: ",listaImagensEntrada[i])
-            parametro = 0.003
-            filtro1(img,dirImgSaida, parametro, i+1)
-        elif (problema == "2"):  # aplicar filtro de suberexposição
-            a=1
-        elif (problema == "3"):  # aplicar filtro de dois pico
-            a=1
-        elif (problema == "4"):  # aplicar filtro de realce, pq é uma imagem normal
-            a=1
-        else:
-            a=1
+        print(listaClassificacaoImg[i], " - ", listaImagensEntrada[i])
 
+        # if (problema == "1"):  # aplicar filtro de superexposição
+        #     print("peguei: ",listaImagensEntrada[i])
+        #     parametro = 0.003
+        #     filtro1(img,dirImgSaida, parametro, i+1)
+        # elif (problema == "2"):  # aplicar filtro de suberexposição
+        #     a=1
+        # elif (problema == "3"):  # aplicar filtro de dois pico
+        #     a=1
+        # elif (problema == "4"):  # aplicar filtro de realce, pq é uma imagem normal
+        #     a=1
+        # else:
+        #     a=1
 
 dirImgEntrada, dirPlotHistEntrada, dirClassificacaoEntrada, dirImgSaida, dirPlotHistSaida = mudarDiretorios()
 
@@ -171,5 +176,5 @@ histosEntrada, listaTotalHistoEntrada = criarHisto(listaImagensEntrada, dirPlotH
 
 classificarImage(histosEntrada, listaTotalHistoEntrada, dirClassificacaoEntrada)
 
-# aplicarFiltro(listaImagensEntrada, dirClassificacaoEntrada, dirImgSaida)
+aplicarFiltro(listaImagensEntrada, dirClassificacaoEntrada, dirImgSaida)
 
