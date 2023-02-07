@@ -160,20 +160,16 @@ def aplicarFiltro(listaImagensEntrada, dirClassificacaoEntrada, dirImgSaida):
         elif (problema == "4"):  # aplicar filtro de realce, pq é uma imagem normal
             a=1
         else:
+            a=1
 
 
 dirImgEntrada, dirPlotHistEntrada, dirClassificacaoEntrada, dirImgSaida, dirPlotHistSaida = mudarDiretorios()
 
 listaImagensEntrada = lerDiretorio(dirImgEntrada)
 
-# histosEntrada, listaTotalHistoEntrada = criarHisto(listaImagensEntrada, dirPlotHistEntrada)
-#
-# classificarImage(histosEntrada, listaTotalHistoEntrada, dirClassificacaoEntrada)
+histosEntrada, listaTotalHistoEntrada = criarHisto(listaImagensEntrada, dirPlotHistEntrada)
 
-aplicarFiltro(listaImagensEntrada, dirClassificacaoEntrada, dirImgSaida)
+classificarImage(histosEntrada, listaTotalHistoEntrada, dirClassificacaoEntrada)
 
-# sol = cv2.imread(FLAGS.img)  # projeto
-# #sol = cv2.imread("./imagens/26.jpg")  # projeto
-# hist, total = histo(sol, dirPlot)
-#
+# aplicarFiltro(listaImagensEntrada, dirClassificacaoEntrada, dirImgSaida)
 
