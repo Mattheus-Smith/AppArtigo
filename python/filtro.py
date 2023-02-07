@@ -13,12 +13,12 @@ flags.DEFINE_string('problema', None, 'identify which filter we are going to use
 def mudarDiretorios():
     if (FLAGS.pc == "0"):#pessoa
         dirTxt = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\imgFiltrada.png"
-        dirTxtOutput= "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\flagOutput.txt"
+        #dirTxtOutput= "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\flagOutput.txt"
     elif (FLAGS.pc == "1"):#projeto
         dirTxt = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\imgFiltrada.png"
-        dirTxtOutput="a"
+        #dirTxtOutput="a"
 
-    return dirTxt, dirTxtOutput
+    return dirTxt
 
 def functionEqualization(imagem):
     #aplicando a equalização pelo histograma
@@ -55,18 +55,19 @@ def funcionSquare (imagem, A):
 
     return imagem
 
-def filtro1(img,dirTxt, dirTxtOutput):
-    imgSquare = funcionSquare(img, 0.003)
+def filtro1(img,dirTxt):
+    imgSquare = funcionSquare(img, 0.004)
     output = functionEqualization(imgSquare)
     cv2.imwrite(dirTxt, output)
 
-    f = open(dirTxtOutput, "w")  # Pessoal
-    f.write("1")
-    f.close()
+    # f = open(dirTxtOutput, "w")  # Pessoal
+    # f.write("1")
+    # f.close()
 
-def aplicarFiltro(img, dirTxt, dirTxtOutput):
+def aplicarFiltro(img, dirTxt):
     if(FLAGS.problema == "1"): #aplicar filtro de superexposição
-        filtro1(img.copy(),dirTxt, dirTxtOutput)
+        print("problema 1")
+        filtro1(img.copy(),dirTxt)
     elif (FLAGS.problema == "2"):  # aplicar filtro de suberexposição
         a = 1
     elif (FLAGS.problema == "3"):  # aplicar filtro de dois pico
@@ -76,7 +77,7 @@ def aplicarFiltro(img, dirTxt, dirTxtOutput):
 
 def main(_args):
 
-    dirTxt, dirTxtOutput= mudarDiretorios()
+    dirTxt= mudarDiretorios()
     imgEntrada = cv2.imread(FLAGS.img)  # projeto
 
     aplicarFiltro(imgEntrada, dirTxt)

@@ -1,0 +1,13 @@
+link: https://stackoverflow.com/questions/52094592/calculate-contrast-of-a-color-imagergb#:~:text=Contrast%20is%20defined%20as%20the,is%20255%2D255%3D0.
+
+Você pode usar o desvio padrão da imagem em escala de cinza como medida para o contraste. Isso é chamado de "contraste RMS". Consulte https://en.wikipedia.org/wiki/Contrast_(visão)#RMS_contrast  para obter detalhes.
+
+====================================================================================================================================
+
+O contraste é definido como a diferença entre o valor de intensidade mais alto e mais baixo da imagem. Assim, você pode facilmente calculá-lo a partir do respectivo histograma.
+
+Exemplo: Se você tiver uma imagem branca simples, o valor mais baixo e o mais alto serão 255, portanto, o contraste é 255-255=0. Se você tem uma imagem com apenas preto (0) e branco (255), você tem um contraste de 255, o maior valor possível.
+
+O mesmo método pode ser aplicado para imagens coloridas se você calcular a luminescência de cada pixel (e, assim, converter a imagem em escala de cinza). Existem vários métodos diferentes para converter imagens em escala de cinza, você pode escolher um que você gosta.
+
+Para tornar a abordagem mais sofisticada, é aconselhável ignorar uma certa porcentagem de pixels para levar em conta os valores atípicos (caso contrário, um único pixel branco e preto levaria ao "contraste total", independentemente de todos os outros pixels). Outra abordagem seria levar em conta o número de pixels escuros e claros, conforme descrito por @Yves Daoust. Essa abordagem tem a falha de que é preciso definir um limite arbitrário para determinar quais pixels contam como escuro / claro (geralmente 127).
