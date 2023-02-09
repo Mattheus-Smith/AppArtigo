@@ -19,8 +19,8 @@ flags.DEFINE_string('pc', "1", 'identifiy wich pc')
 
 def main(_args):
 
-    img = cv2.imread("./../1imagensEntrada/21.jpg")
-    i = 10
+    img = cv2.imread("./../1imagensEntrada/08.jpg")
+    i = 1
 
     # equalize CLAHE
     if (i == 1):
@@ -76,7 +76,7 @@ def main(_args):
 
     # correcao de gamma
     elif (i == 7):
-        parametro = 0.8
+        parametro = 0.7
         out = correcaoGamma(img, parametro)
 
         texto = "./../output_gamma_"+str(parametro)+".png"
@@ -84,10 +84,10 @@ def main(_args):
 
     # gamma -> square
     elif (i == 8):
-        parametroGamma =1.75
+        parametroGamma =1.8
         out_gamma = correcaoGamma(img, parametroGamma)
 
-        parametroSquare = 0.0045
+        parametroSquare = 0.004
         out_square = funcionSquare(out_gamma, parametroSquare)
 
         texto = "./../output_gamma("+str(parametroGamma)+")_Square("+str(parametroSquare)+").png"
@@ -98,7 +98,7 @@ def main(_args):
         parametroSquare = 0.0045
         out_square = funcionSquare(img, parametroSquare)
 
-        parametroGamma = 0.9
+        parametroGamma = 0.85
         out_gamma = correcaoGamma(out_square, parametroGamma)
 
         texto = "./../output_square(" + str(parametroSquare) + ")_output_gamma(" + str(parametroGamma) + ").png"
