@@ -8,12 +8,19 @@ from absl import app, flags, logging
 from absl.flags import FLAGS
 
 def mudarDiretorios():
-    dirImgEntrada = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\1imagensEntrada"
-    dirPlotHistEntrada = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\2histoImagensEntrada\\"
-    dirClassificacaoEntrada = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\3ClassificacaoImagem\\"
+    dirImgEntrada = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\1imagensEntrada"
+    dirPlotHistEntrada = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\2histoImagensEntrada\\"
+    dirClassificacaoEntrada = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\3ClassificacaoImagem\\"
 
-    dirImgSaida = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\4imagensSaida\\"
-    dirPlotHistSaida = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\5histoImagensSaida\\"
+    dirImgSaida = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\4imagensSaida\\"
+    dirPlotHistSaida = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\5histoImagensSaida\\"
+
+    # dirImgEntrada = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\1imagensEntrada"
+    # dirPlotHistEntrada = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\2histoImagensEntrada\\"
+    # dirClassificacaoEntrada = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\3ClassificacaoImagem\\"
+    #
+    # dirImgSaida = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\4imagensSaida\\"
+    # dirPlotHistSaida = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\5histoImagensSaida\\"
 
     return dirImgEntrada, dirPlotHistEntrada, dirClassificacaoEntrada, dirImgSaida, dirPlotHistSaida
 
@@ -51,11 +58,12 @@ def criarHisto(listaImg, dirPlot):
 
 def dividirHistograma(hist):
 
-    histDividido = np.array_split(hist, 10)
+    tam = 4
+    histDividido = np.array_split(hist, tam)
 
     cont = 0
     lista=[]
-    for i in range(0, 10):
+    for i in range(0, tam):
         somar=0
         for j in range(0, len(histDividido[i])):
             somar += int(histDividido[i][j])
@@ -65,14 +73,18 @@ def dividirHistograma(hist):
 
     return lista
 
-def identificarPicos(lista, total, dirClassificacaoEntrada, i):
-    suber = lista[0]+lista[1]+lista[2]
+def verificarPorcetagem(listaImagensEntrada,classe, i):
+    print(i, classe, listaImagensEntrada)
+
+def identificarPicos(listaImagensEntrada, lista, total, dirClassificacaoEntrada, i):
+
+    suber = lista[0]
     dffSuber = total - suber
 
-    super = lista[7] + lista[8] + lista[9]
+    super = lista[3]
     dffSuper = total - super
 
-    meio = lista[3] + lista[4] + lista[5] + lista[6]
+    meio = lista[1] + lista[2]
 
     if i<10:
         i = str(0)+ str(i)
@@ -81,25 +93,41 @@ def identificarPicos(lista, total, dirClassificacaoEntrada, i):
     f = open(output, "w")  # Pessoal
 
     if( suber > dffSuber ):
+        verificarPorcetagem(listaImagensEntrada, (suber*100)/total, 1)
+
         f.write("1 Essa imagem tem suberexposicao")
         f.close()
         #print("1 Essa imagem tem suberexposicao")
+
+        return (suber*100)/total
+
     elif( super > dffSuper ):
+
+        verificarPorcetagem(listaImagensEntrada, (super * 100)/total, 2)
         f.write("2 Essa imagem tem superexposicao")
         f.close()
         #print("2 Essa imagem tem superexposicao")
+
+        return (super * 100) / total
+
     elif( super > meio and suber > meio ):
         f.write("3 E uma com dois picos")
         f.close()
         #print("3 E uma com dois picos")
+
+        return -1
+
     else:
         f.write("4 E uma imagem normal")
         f.close()
         #print("4 E uma imagem normal")
+        return -1
 
-def classificarImage(histosEntrada, listaTotalHistoEntrada, dirClassificacaoEntrada):
+def classificarImage(listaImagensEntrada, histosEntrada, listaTotalHistoEntrada, dirClassificacaoEntrada):
+    lista = []
     for i in range(1, len(histosEntrada)+1):
-        identificarPicos(dividirHistograma(histosEntrada[i-1]), listaTotalHistoEntrada[i-1], dirClassificacaoEntrada, i)
+        lista.append(identificarPicos(listaImagensEntrada[i-1], dividirHistograma(histosEntrada[i-1]), listaTotalHistoEntrada[i-1], dirClassificacaoEntrada, i))
+    return lista
 
 def functionEqualization(imagem):
     #aplicando a equalização pelo histograma
@@ -136,12 +164,45 @@ def funcionSquare (imagem, A):
 
     return imagem
 
-def filtro1(img,dirImgSaida, parametro, i):
+def filtro2(img,dirImgSaida, parametro, i, dirPlotHistSaida):
+
     imgSquare = funcionSquare(img, parametro)
     output = functionEqualization(imgSquare)
+
+    camSaidaHisto = dirPlotHistSaida + str(i) + "_" + str(parametro) + ".jpg"
+    Histograma(imgSquare, camSaidaHisto)
+
     camSaida = dirImgSaida+str(i)+"_"+str(parametro)+".png"
     cv2.imwrite(camSaida, output)
-def aplicarFiltro(listaImagensEntrada, dirClassificacaoEntrada, dirImgSaida):
+
+def correcaoGamma(img, gamma):
+
+  lookUpTable = np.empty((1,256), np.uint8)
+  for i in range(256):
+    lookUpTable[0,i] = np.clip(pow(i / 255.0, gamma) * 255.0, 0, 255)
+
+  res = cv2.LUT(img, lookUpTable)
+
+  return res
+
+def filtro1(img,dirImgSaida, parametro, i, dirPlotHistSaida):
+
+    img_gamma_corrected = correcaoGamma(img, 1.2)
+
+    if ( i == 1 ):
+        texto = dirImgSaida+"teste.png"
+        print(texto)
+        cv2.imwrite(texto, img_gamma_corrected)
+
+    imgSquare = funcionSquare(img_gamma_corrected, parametro)
+
+    camSaidaHisto = dirPlotHistSaida + str(i) + "_" + str(parametro) + ".jpg"
+    Histograma(imgSquare, camSaidaHisto)
+
+    camSaida = dirImgSaida + str(i) + "_" + str(parametro) + ".png"
+    cv2.imwrite(camSaida, imgSquare)
+
+def aplicarFiltro(listaImagensEntrada, dirClassificacaoEntrada, dirImgSaida, listaPorcetagemImgEntrada, dirPlotHistSaida):
     listaClassificacaoImg = lerDiretorio(dirClassificacaoEntrada)
 
     for i in range(0, len(listaClassificacaoImg)):
@@ -152,21 +213,25 @@ def aplicarFiltro(listaImagensEntrada, dirClassificacaoEntrada, dirImgSaida):
         problema = problema[0]
 
         img = cv2.imread(listaImagensEntrada[i])
+        #print(problema, " - ", listaClassificacaoImg[i], " - ", listaImagensEntrada[i])
 
-        print(listaClassificacaoImg[i], " - ", listaImagensEntrada[i])
+        if (problema == "1"):  # aplicar filtro de suberexposição
+            a=1
+        elif (problema == "2"):  # aplicar filtro de superexposição
+            print("peguei: ", listaImagensEntrada[i])
 
-        # if (problema == "1"):  # aplicar filtro de superexposição
-        #     print("peguei: ",listaImagensEntrada[i])
-        #     parametro = 0.003
-        #     filtro1(img,dirImgSaida, parametro, i+1)
-        # elif (problema == "2"):  # aplicar filtro de suberexposição
-        #     a=1
-        # elif (problema == "3"):  # aplicar filtro de dois pico
-        #     a=1
-        # elif (problema == "4"):  # aplicar filtro de realce, pq é uma imagem normal
-        #     a=1
-        # else:
-        #     a=1
+            if (listaPorcetagemImgEntrada[i] >= 87):
+                parametro = 0.004
+                filtro1(img, dirImgSaida, parametro, i + 1, dirPlotHistSaida)
+            else:
+                parametro = 0.004
+                filtro2(img, dirImgSaida, parametro, i + 1, dirPlotHistSaida)
+        elif (problema == "3"):  # aplicar filtro de dois pico
+            a=1
+        elif (problema == "4"):  # aplicar filtro de realce, pq é uma imagem normal
+            a=1
+        else:
+            a=1
 
 dirImgEntrada, dirPlotHistEntrada, dirClassificacaoEntrada, dirImgSaida, dirPlotHistSaida = mudarDiretorios()
 
@@ -174,7 +239,7 @@ listaImagensEntrada = lerDiretorio(dirImgEntrada)
 
 histosEntrada, listaTotalHistoEntrada = criarHisto(listaImagensEntrada, dirPlotHistEntrada)
 
-classificarImage(histosEntrada, listaTotalHistoEntrada, dirClassificacaoEntrada)
+listaPorcetagemImgEntrada =  classificarImage(listaImagensEntrada, histosEntrada, listaTotalHistoEntrada, dirClassificacaoEntrada)
 
-aplicarFiltro(listaImagensEntrada, dirClassificacaoEntrada, dirImgSaida)
+aplicarFiltro(listaImagensEntrada, dirClassificacaoEntrada, dirImgSaida, listaPorcetagemImgEntrada, dirPlotHistSaida)
 
