@@ -6,13 +6,13 @@ import sys
 from absl import app, flags, logging
 from absl.flags import FLAGS
 
-from correcaoGamma import *
-from funcionCLAHE import *
-from funcionEqualize import *
+from correcaoGamma import correcaoGamma
+from funcionCLAHE import equalizeCLAHE
+from funcionEqualize import functionEqualization
 from funcionLinear import *
 from funcionLinearPorParte import *
-from funcionQuadrada import *
-from funcionSquare import *
+from funcionQuadrada import funcionQuadrada
+from funcionSquare import funcionSquare
 
 
 flags.DEFINE_string('pc', "1", 'identifiy wich pc')
