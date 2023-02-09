@@ -14,9 +14,10 @@ def Histograma(imagem, dirPlot):
         total += hist[i]
 
     return hist, total
-# img = cv2.imread("./../1imagensEntrada/18.jpg")
-#
-# histo, total = Histograma(img, "./../histograma_output_CLAHE_2_(8).jpg")
+
+img = cv2.imread("./../1imagensEntrada/21.jpg")
+
+histo, total = Histograma(img, "./../histograma_output_gamma(0.6).jpg")
 
 
 
