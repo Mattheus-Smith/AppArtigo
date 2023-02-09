@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-from matplotlib import pyplot as plt
 from pylab import *
 
 def functionEqualization(imagem):
@@ -13,11 +12,11 @@ def functionEqualization(imagem):
     # convert the YUV image back to RGB format
     equ = cv2.cvtColor(img_yuv, cv2.COLOR_YUV2BGR)
 
-    return equ      #cv2_imshow(res)
+    return equ
 
-img = cv2.imread("./../1imagensEntrada/28.jpg")
-
-out_equalize = functionEqualization(img)
-
-texto = "./../output_equalize.png"
-cv2.imwrite(texto, out_equalize)
+# img = cv2.imread("./../1imagensEntrada/28.jpg")
+#
+# out_equalize = functionEqualization(img)
+#
+# texto = "./../output_equalize.png"
+# cv2.imwrite(texto, out_equalize)

@@ -13,10 +13,10 @@ def correcaoGamma(img, gamma):
 
   return res
 
-img = cv2.imread("./1imagensEntrada/04.jpg")
-
-parametro = 1.7
-out = correcaoGamma(img, parametro)
-
-texto = "output_gamma_"+str(parametro)+".png"
-cv2.imwrite(texto, out)
+# img = cv2.imread("./1imagensEntrada/04.jpg")
+#
+# parametro = 1.7
+# out = correcaoGamma(img, parametro)
+#
+# texto = "output_gamma_"+str(parametro)+".png"
+# cv2.imwrite(texto, out)

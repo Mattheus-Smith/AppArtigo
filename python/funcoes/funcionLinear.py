@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-from matplotlib import pyplot as plt
 from pylab import *
 
 def funcitonLinear(imgI, A, B):
@@ -19,11 +18,11 @@ def funcitonLinear(imgI, A, B):
 
     return imgI
 
-img = cv2.imread("./../1imagensEntrada/18.jpg")
-
-parametroA = 0.55
-parametroB = 25
-out = funcitonLinear(img, parametroA, parametroB)
-
-texto = "./../output_linear_("+str(parametroA)+","+str(parametroB)+").png"
-cv2.imwrite(texto, out)
+# img = cv2.imread("./../1imagensEntrada/18.jpg")
+#
+# parametroA = 0.55
+# parametroB = 25
+# out = funcitonLinear(img, parametroA, parametroB)
+#
+# texto = "./../output_linear_("+str(parametroA)+","+str(parametroB)+").png"
+# cv2.imwrite(texto, out)

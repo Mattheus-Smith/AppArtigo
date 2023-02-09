@@ -1,9 +1,9 @@
-python "C:\Users\Smith Fernandes\Documents\4 - github\AppArtigo\python\main.py" --img "C:\Users\Smith Fernandes\Documents\4 - github\AppArtigo\python\imagens\14.jpg" --pc 1
+python "C:\Users\Smith Fernandes\Documents\4 - github\AppArtigo\python\funcoes\classificadorImagem.py" --img "C:\Users\Smith Fernandes\Documents\4 - github\AppArtigo\python\1imagensEntrada\14.jpg" --pc 1
+
+python "C:\Users\Smith Fernandes\Documents\4 - github\AppArtigo\python\funcoes\SelecionadorFiltro.py" --img "C:\Users\Smith Fernandes\Documents\4 - github\AppArtigo\python\1imagensEntrada\14.jpg" --pc 1 --problema 1
 
 
-python "C:\Users\Smith Fernandes\Documents\4 - github\AppArtigo\python\main.py" --img "C:\Users\Smith Fernandes\Documents\4 - github\AppArtigo\python\imagens\14.jpg" --pc 1 -- problema 1
+python "H:\SmithHD\Documentos\4-github\AppArtigo\python\funcoes\classificadorImagem.py" --img "H:\SmithHD\Documentos\4-github\AppArtigo\python\1imagensEntrada\14.jpg" --pc 0
 
-python "H:\SmithHD\Documentos\4-github\AppArtigo\python\main.py" --img "H:\SmithHD\Documentos\4-github\AppArtigo\python\imagens\14.jpg" --pc 0
-
-python "H:\SmithHD\Documentos\4-github\AppArtigo\python\filtro.py" --img "H:\SmithHD\Documentos\4-github\AppArtigo\python\imagens\14.jpg" --pc 0 --problema 1
+python "H:\SmithHD\Documentos\4-github\AppArtigo\python\funcoes\SelecionadorFiltro.py" --img "H:\SmithHD\Documentos\4-github\AppArtigo\python\1imagensEntrada\14.jpg" --pc 0 --problema 1
 

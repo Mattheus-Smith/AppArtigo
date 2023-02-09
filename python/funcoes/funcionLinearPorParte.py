@@ -64,4 +64,4 @@ def funcitonPiecewiseLinear(imagen, out, Ainicio, Amedio, Afim, grauInicio, grau
     return imgI
   elif( out == 0 ):
     res = np.hstack((imagen, imgI))
-    cv2_imshow(res)
+    #cv2.imshow(res)
