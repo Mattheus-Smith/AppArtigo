@@ -48,7 +48,7 @@ def identificarPicos(lista, total):
     else:
         print("4 E uma imagem normal")
 
-img = cv2.imread("./1imagensEntrada/18.jpg")
+img = cv2.imread("./../1imagensEntrada/18.jpg")
 
 histo, total = Histograma(img)
 

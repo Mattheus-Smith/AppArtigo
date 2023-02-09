@@ -59,7 +59,7 @@ def equalizeCLAHE(img, parametroCLAHE, CLAHE_matriz):
     bgr = cv2.cvtColor(result, cv2.COLOR_HSV2BGR)
     return  bgr
 
-img = cv2.imread("./1imagensEntrada/18.jpg")
+img = cv2.imread("./../1imagensEntrada/18.jpg")
 
 # ======================gamma -> square -> equaliza
 # parametroGamma = 0.6
@@ -70,7 +70,7 @@ img = cv2.imread("./1imagensEntrada/18.jpg")
 #
 # #out_equalize = functionEqualization(out_square)
 #
-# texto = "output_gamma("+str(parametroGamma)+")_Square("+str(parametroSquare)+").png"
+# texto = "./../output_gamma("+str(parametroGamma)+")_Square("+str(parametroSquare)+").png"
 # cv2.imwrite(texto, out_square)
 
 
@@ -81,7 +81,7 @@ img = cv2.imread("./1imagensEntrada/18.jpg")
 # parametroGamma = 0.4
 # out_gamma = correcaoGamma(out_square, parametroGamma)
 #
-# texto = "output_Square("+str(parametroSquare)+")_gamma("+str(parametroGamma)+").png"
+# texto = "./../output_Square("+str(parametroSquare)+")_gamma("+str(parametroGamma)+").png"
 # cv2.imwrite(texto, out_gamma)
 
 # =======================gamma -> equalize
@@ -90,7 +90,7 @@ img = cv2.imread("./1imagensEntrada/18.jpg")
 #
 # out_equalize = functionEqualization(out_gamma)
 #
-# texto = "output_gamma("+str(parametroGamma)+")_out_equalize).png"
+# texto = "./../output_gamma("+str(parametroGamma)+")_out_equalize).png"
 # cv2.imwrite(texto, out_equalize)
 
 
@@ -104,5 +104,5 @@ parametroCLAHE = 2
 CLAHE_matriz = 12
 out_clahe = equalizeCLAHE(out_gamma, parametroCLAHE, CLAHE_matriz)
 
-texto = "output_gamma("+str(parametroGamma)+")_output_CLAHE_"+str(parametroCLAHE)+"_("+str(CLAHE_matriz)+").png"
+texto = "./../output_gamma("+str(parametroGamma)+")_output_CLAHE_"+str(parametroCLAHE)+"_("+str(CLAHE_matriz)+").png"
 cv2.imwrite(texto, out_clahe)

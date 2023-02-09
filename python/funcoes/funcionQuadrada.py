@@ -28,10 +28,10 @@ def funcionQuadrada(imgI, A, maximo):
     return imgI
 
 
-img = cv2.imread("./1imagensEntrada/18.jpg")
+img = cv2.imread("./../1imagensEntrada/18.jpg")
 
 parametroQuadrado = 0.02
 out = funcionQuadrada(img, parametroQuadrado, 255)
 
-texto = "output_quadrada_"+str(parametroQuadrado)+".png"
+texto = "./../output_quadrada_"+str(parametroQuadrado)+".png"
 cv2.imwrite(texto, out)

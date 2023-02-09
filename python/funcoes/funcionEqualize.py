@@ -15,9 +15,9 @@ def functionEqualization(imagem):
 
     return equ      #cv2_imshow(res)
 
-img = cv2.imread("./1imagensEntrada/28.jpg")
+img = cv2.imread("./../1imagensEntrada/28.jpg")
 
 out_equalize = functionEqualization(img)
 
-texto = "output_equalize.png"
+texto = "./../output_equalize.png"
 cv2.imwrite(texto, out_equalize)

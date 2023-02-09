@@ -77,10 +77,18 @@ def aplicarFiltro(img, dirTxt):
 
 def main(_args):
 
-    dirTxt= mudarDiretorios()
-    imgEntrada = cv2.imread(FLAGS.img)  # projeto
+    img = cv2.imread("./../1imagensEntrada/27.jpg")
 
-    aplicarFiltro(imgEntrada, dirTxt)
+    parametroSquare = 0.004
+    out = funcionSquare(img, parametroSquare)
+
+    texto = "./../output_Square_" + str(parametroSquare) + ".png"
+    cv2.imwrite(texto, out)
+
+    # dirTxt= mudarDiretorios()
+    # imgEntrada = cv2.imread(FLAGS.img)  # projeto
+    #
+    # aplicarFiltro(imgEntrada, dirTxt)
 
 if __name__ == '__main__':
     try:
