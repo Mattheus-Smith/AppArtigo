@@ -25,13 +25,10 @@ def funcionSquare (imagem, A):
 
     return imagem
 
-img = cv2.imread("./../1imagensEntrada/10.jpg")
-
-parametroSquare = 0.001
-out = funcionSquare(img, parametroSquare)
-
-texto = "./../output_Square_"+str(parametroSquare)+".png"
-cv2.imwrite(texto, out)
+imagem = cv2.imread("./../1imagensEntrada/10.jpg")
+img = cv2.cvtColor(imagem, cv2.COLOR_RGB2GRAY)
+texto = "./../output_gray.png"
+cv2.imwrite(texto, img)
 
 
 

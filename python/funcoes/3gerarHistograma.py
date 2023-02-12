@@ -6,7 +6,8 @@ def Histograma(imagem, dirPlot):
     hist = cv2.calcHist([img], [0], None, [256], [0, 256]).astype(int)
 
     plt.plot(hist)
-    plt.savefig(fname=dirPlot)  # Projeto
+    #plt.savefig(fname=dirPlot)  # Projeto
+    plt.show()
     plt.close()
 
     total = 0
@@ -15,8 +16,8 @@ def Histograma(imagem, dirPlot):
 
     return hist, total
 
-#img = cv2.imread("./../1imagensEntrada/21.jpg")
-img = cv2.imread("./../teste.png")
+img = cv2.imread("./../1imagensEntrada/10.jpg")
+#img = cv2.imread("./../teste.png")
 
 histo, total = Histograma(img, "./../histograma_output_teste.jpg")
 

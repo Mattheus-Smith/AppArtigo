@@ -81,13 +81,13 @@ def funcitonLinear4(imgI,A, B, limiarMin):
 
     return imgI
 
-img = cv2.imread("./../1imagensEntrada/01.jpg")
+img = cv2.imread("./../1imagensEntrada/10.jpg")
 # paraA = 2
 # paraB = -40
 
 paraA = 0.7
 paraB = +40
-limiarMax = 190
+limiarMax = 120
 
 out = funcitonLinear4(img, paraA, paraB, limiarMax)
 

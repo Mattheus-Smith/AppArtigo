@@ -44,12 +44,12 @@ def identificarPicos(lista, total):
     elif( super > dffSuper ):
         print("2 Essa imagem tem superexposicao com ", (super * 100) / total, "%")
     elif( super > meio and suber > meio ):
-        print("2 Essa imagem tem superexposicao com suber: ", (suber * 100) / total, "%", "e super: ", (super * 100) / total,"%")
+        print("3 Essa imagem tem superexposicao com suber: ", (suber * 100) / total, "%", "e super: ", (super * 100) / total,"%")
     else:
         print("4 E uma imagem normal")
 
-# img = cv2.imread("./../1imagensEntrada/18.jpg")
+img = cv2.imread("./../caso10/10.jpg")
 #
-# histo, total = Histograma(img)
+histo, total = Histograma(img)
 #
-# identificarPicos(dividirHistograma(histo), total)
+identificarPicos(dividirHistograma(histo), total)
