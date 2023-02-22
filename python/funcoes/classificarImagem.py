@@ -8,16 +8,16 @@ from absl import app, flags, logging
 from absl.flags import FLAGS
 
 flags.DEFINE_string('img', None, 'path to image file')
-flags.DEFINE_string('pc', "1", 'identifiy wich pc')
+flags.DEFINE_string('pc', None, 'identifiy wich pc')
 
 def mudarDiretorios():
     if (FLAGS.pc == "0"):#pessoa
-        dirPlotHist = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\"
-        dirClassificacao = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\"
+        dirPlotHist = r"H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\histograma.png"
+        dirClassificacao = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\classificacao.txt"
 
     elif (FLAGS.pc == "1"):#projeto
-        dirPlotHist = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\"
-        dirClassificacao = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\"
+        dirPlotHist = r"C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\histograma.png"
+        dirClassificacao = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\classificacao.txt"
 
     return dirPlotHist, dirClassificacao
 
@@ -58,8 +58,7 @@ def identificarPicos(lista, total, dirClassificacaoEntrada):
     super = lista[3]; dffSuper = total - super
     meio = lista[1] + lista[2]
 
-    output = dirClassificacaoEntrada+"classificacao.txt"
-    f = open(output, "w")
+    f = open(dirClassificacaoEntrada, "w")
 
     if( suber > dffSuber ):
         f.write("1 Essa imagem tem suberexposicao")

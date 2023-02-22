@@ -45,15 +45,15 @@ public class FuncoeExtras {
 	}
 	
 	public void definirDiretorios(String i) {
-		flagOutput = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\flagOutput.txt";
+		flagOutput = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\flagOutput.txt";		
 		if( i == "0" ) {//pessoal
-			camHistoOriginal = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\saida.png";
+			camHistoOriginal = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\histograma.png";
 			//Funcao substituirTexto
-			arq = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\saida.txt";
+			arq = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\classificacao.txt";
 			//Funcao ExecutarScriptPython
 			String[] entrada = {
 	      		      "python",
-	      		      "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\main.py",
+	      		      "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\funcoes\\classificarImagem.p",
 	      		      "--img",
 	      		      "",
 	      		      "--pc",
@@ -78,24 +78,20 @@ public class FuncoeExtras {
 			jfc = new JFileChooser("H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\imagens");	//pc pessoal
 			
 		}else { //projeto
-			//Funcao substituirImagem
-			camHistoOriginal = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\saida.png";
-			//Funcao substituirTexto
-			arq = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\saida.txt";
 			//Funcao ExecutarScriptPython
 			String[] entrada = {
       		      "python",
-      		      "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\main.py",
+      		      "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\funcoes\\classificarImagem.py",
       		      "--img",
       		      "",
       		      "--pc",
     		      "",
-      		    };
+      		};
 			cmdExecEntrada = entrada;
 			
 			String[] filtro = {
 	      		      "python",
-	      		      "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\filtro.py",
+	      		      "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\funcoes\\classificarImagem.py",
 	      		      "--img",
 	      		      "",
 	      		      "--pc",
@@ -106,14 +102,14 @@ public class FuncoeExtras {
 			cmdExecFiltro = filtro;
 			camImagemEditada = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\imgFiltrada.png";
 			//Funcao btnEsq.addActionListener
-			jfc = new JFileChooser("C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\imagens");	//pc Projeto
+			jfc = new JFileChooser("C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\1imagensEntrada");	//pc Projeto
 		}
 
 	}
 	
-	public void ExecutarScriptPython(String saida, String pc) {
+	public void ExecutarScriptPython(String img, String pc) {
         try {
-        	cmdExecEntrada[3] = saida; 
+        	cmdExecEntrada[3] = img; 
         	cmdExecEntrada[5] = pc; 
 		    Runtime.getRuntime().exec(cmdExecEntrada);
 		    
