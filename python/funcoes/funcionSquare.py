@@ -25,13 +25,13 @@ def funcionSquare (imagem, A):
 
     return imagem
 
-img = cv2.imread("./../1imagensEntrada/10.jpg")
-
-parametroSquare = 0.001
-out = funcionSquare(img, parametroSquare)
-
-texto = "./../output_Square_"+str(parametroSquare)+".png"
-cv2.imwrite(texto, out)
+# img = cv2.imread("./../1imagensEntrada/10.jpg")
+#
+# parametroSquare = 0.001
+# out = funcionSquare(img, parametroSquare)
+#
+# texto = "./../output_Square_"+str(parametroSquare)+".png"
+# cv2.imwrite(texto, out)
 
 
 

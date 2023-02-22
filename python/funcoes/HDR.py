@@ -2,8 +2,9 @@ import cv2 as cv
 import numpy as np
 
 # Loading exposure images into a list
-img_fn = ["./../caso10/10.jpg", "./../caso10/output_gamma_3.png", "./../caso10/output_gamma_4.png",
-          "./../caso10/output_Square_0.001.png" , "./../caso10/output_Square_0.004.png", "./../caso10/output_Square_0.004_0.0032_252_por_parte.png"]
+img_fn = ["./../caso15/15.jpg" ,"./../caso15/output_gamma_0.45.png","./../caso15/output_gamma_0.6.png",
+          "./../caso15/output_gamma_0.7.png", "./../caso15/output_gamma_0.8.png", "./../caso15/output_gamma_1.8.png", "./../caso15/output_gamma_4.png"]
+
 img_list = [cv.imread(fn) for fn in img_fn]
 
 # Exposure fusion using Mertens

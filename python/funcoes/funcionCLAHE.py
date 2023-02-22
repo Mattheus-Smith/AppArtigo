@@ -15,11 +15,11 @@ def equalizeCLAHE(img, parametroCLAHE, CLAHE_matriz):
     return  bgr
 
 
-img = cv2.imread("./../1imagensEntrada/10.jpg")
-
-parametroCLAHE = 4
-CLAHE_matriz = 4
-output_CLAHE = equalizeCLAHE(img, parametroCLAHE, CLAHE_matriz)
-
-texto = "./../output_CLAHE_"+str(parametroCLAHE)+"_("+str(CLAHE_matriz)+").png"
-cv2.imwrite(texto, output_CLAHE)
+# img = cv2.imread("./../1imagensEntrada/10.jpg")
+#
+# parametroCLAHE = 4
+# CLAHE_matriz = 4
+# output_CLAHE = equalizeCLAHE(img, parametroCLAHE, CLAHE_matriz)
+#
+# texto = "./../output_CLAHE_"+str(parametroCLAHE)+"_("+str(CLAHE_matriz)+").png"
+# cv2.imwrite(texto, output_CLAHE)

@@ -9,8 +9,8 @@ from absl.flags import FLAGS
 from correcaoGamma import correcaoGamma
 from funcionCLAHE import equalizeCLAHE
 from funcionEqualize import functionEqualization
-from funcionLinear import *
-from funcionLinearPorParte import *
+#from funcionLinear import *
+#from funcionLinearPorParte import *
 from funcionQuadrada import funcionQuadrada
 from funcionSquare import funcionSquare
 
@@ -19,8 +19,8 @@ flags.DEFINE_string('pc', "1", 'identifiy wich pc')
 
 def main(_args):
 
-    img = cv2.imread("./../1imagensEntrada/08.jpg")
-    i = 1
+    img = cv2.imread("./../1imagensEntrada/15.jpg")
+    i = 10
 
     # equalize CLAHE
     if (i == 1):
@@ -106,11 +106,11 @@ def main(_args):
 
     # gamma -> equalize CLAHE
     elif(i == 10):
-        parametroGamma = 0.8
+        parametroGamma = 0.7
         out_gamma = correcaoGamma(img, parametroGamma)
 
         parametroCLAHE = 3
-        CLAHE_matriz = 10
+        CLAHE_matriz = 6
         out_clahe = equalizeCLAHE(out_gamma, parametroCLAHE, CLAHE_matriz)
 
         texto = "./../output_gamma("+str(parametroGamma)+")_output_CLAHE_"+str(parametroCLAHE)+"_("+str(CLAHE_matriz)+").png"
