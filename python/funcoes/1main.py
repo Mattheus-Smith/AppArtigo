@@ -12,17 +12,14 @@ flags.DEFINE_string('pc', "1", 'identifiy wich pc')
 
 def mudarDiretorios():
     if (FLAGS.pc == "0"):#pessoa
-        dirImgEntrada = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\1imagensEntrada"
-        dirPlotHistEntrada = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\2histoImagensEntrada\\"
-        dirClassificacaoEntrada = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\3ClassificacaoImagem\\"
+        dirPlotHist = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\"
+        dirClassificacao = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\"
 
     elif (FLAGS.pc == "1"):#projeto
-        dirImgEntrada = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\1imagensEntrada"
-        dirPlotHistEntrada = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\2histoImagensEntrada\\"
-        dirClassificacaoEntrada = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\3ClassificacaoImagem\\"
+        dirPlotHist = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\"
+        dirClassificacao = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\"
 
-
-    return dirImgEntrada, dirPlotHistEntrada, dirClassificacaoEntrada
+    return dirPlotHist, dirClassificacao
 
 def Histograma(imagem, dirPlot):
     img = cv2.cvtColor(imagem, cv2.COLOR_RGB2GRAY)
@@ -37,27 +34,6 @@ def Histograma(imagem, dirPlot):
         total += hist[i]
 
     return hist, total
-
-def lerDiretorio(pasta):
-    listaImagensEntrada = []
-    for diretorio, subpastas, arquivos in os.walk(pasta):
-        for arquivo in arquivos:
-            listaImagensEntrada.append(os.path.join(diretorio, arquivo))
-            #print(os.path.join(diretorio, arquivo))
-    return listaImagensEntrada
-
-def criarHisto(listaImg, dirPlotHistEntrada):
-    histosEntrada = []
-    listaTotalHistoEntrada = []
-    for i in range (1, len(listaImg)+1):
-        if i<10:
-            cam = dirPlotHistEntrada +str(0)+str(i) + ".jpg"
-        else:
-            cam = dirPlotHistEntrada + str(i) + ".jpg"
-        histo, total = Histograma(cv2.imread(listaImg[i-1]), cam)
-        histosEntrada.append(histo)
-        listaTotalHistoEntrada.append(total)
-    return histosEntrada, listaTotalHistoEntrada
 
 def dividirHistograma(hist):
 
@@ -76,55 +52,38 @@ def dividirHistograma(hist):
 
     return lista
 
-def identificarPicos(lista, total, dirClassificacaoEntrada, i):
+def identificarPicos(lista, total, dirClassificacaoEntrada):
 
-    suber = lista[0]
-    dffSuber = total - suber
-
-    super = lista[3]
-    dffSuper = total - super
-
+    suber = lista[0]; dffSuber = total - suber
+    super = lista[3]; dffSuper = total - super
     meio = lista[1] + lista[2]
 
-    if i<10:
-        i = str(0)+ str(i)
-
-    output = dirClassificacaoEntrada+str(i)+".txt"
+    output = dirClassificacaoEntrada+"classificacao.txt"
     f = open(output, "w")
 
     if( suber > dffSuber ):
         f.write("1 Essa imagem tem suberexposicao")
-        f.close()
         #print("1 Essa imagem tem suberexposicao")
 
     elif( super > dffSuper ):
         f.write("2 Essa imagem tem superexposicao")
-        f.close()
         #print("2 Essa imagem tem superexposicao")
 
     elif( super > meio and suber > meio ):
         f.write("3 E uma com dois picos")
-        f.close()
         #print("3 E uma com dois picos")
 
     else:
         f.write("4 E uma imagem normal")
-        f.close()
         #print("4 E uma imagem normal")
-
-def classificarImage(histosEntrada, listaTotalHistoEntrada, dirClassificacaoEntrada):
-    for i in range(1, len(histosEntrada)+1):
-        identificarPicos(dividirHistograma(histosEntrada[i - 1]), listaTotalHistoEntrada[i - 1], dirClassificacaoEntrada, i)
+    f.close()
 
 def main(_args):
-    dirImgEntrada, dirPlotHistEntrada, dirClassificacaoEntrada = mudarDiretorios()
 
-    listaImagensEntrada = lerDiretorio(dirImgEntrada)
-
-    histosEntrada, listaTotalHistoEntrada = criarHisto(listaImagensEntrada, dirPlotHistEntrada)
-
-    # classificarImage(listaImagensEntrada, histosEntrada, listaTotalHistoEntrada)
-    classificarImage(histosEntrada, listaTotalHistoEntrada, dirClassificacaoEntrada)
+    dirPlotHist, dirClassificacao = mudarDiretorios()           #att os diretorios
+    imgEntrada = cv2.imread(FLAGS.img)                          #ler a imagem selecionada
+    histo, total = Histograma(imgEntrada, dirPlotHist)          #gerar histograma dessa imagem e salvar tbm para mostrar no APP
+    identificarPicos(dividirHistograma(histo), total, dirClassificacao)
 
 if __name__ == '__main__':
     try:
