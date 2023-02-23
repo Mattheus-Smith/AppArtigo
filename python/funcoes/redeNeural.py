@@ -49,11 +49,11 @@ def getClassificacao(CamProblema):
 
 inputs=[]
 
-dirImgEntrada = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\1imagensEntradaTeste"
-dirClassificacaoEntrada = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\7ClassificacaoImagem\\"
+dirImgEntrada = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\7imagensEntradaTeste"
+dirClassificacaoEntrada = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\8ClassificacaoImagem\\"
 
-dirImgEntrada = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\1imagensEntradaTeste"
-dirClassificacaoEntrada = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\7ClassificacaoImagem\\"
+# dirImgEntrada = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\7imagensEntradaTeste"
+# dirClassificacaoEntrada = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\8ClassificacaoImagem\\"
 
 listaImagensEntrada = lerDiretorio(dirImgEntrada)
 listaClassificacaoEntrada = lerDiretorio(dirClassificacaoEntrada)
@@ -69,6 +69,7 @@ for i in range(0, len(listaClassificacaoEntrada)):
     classificacao = getClassificacao(listaClassificacaoEntrada[i])
     desvioPadrao = np.std(histosEntrada[i])
 
+    print(desvioPadrao)
     #inputs.append([histosEntrada[i], np.ndarray(listaTotalHistoEntrada[i]) ,np.ndarray(classificacao), np.ndarray(desvioPadrao)])
     inputs.append([histosEntrada[i]])
 
