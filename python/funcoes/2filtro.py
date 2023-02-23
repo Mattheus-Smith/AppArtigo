@@ -11,6 +11,7 @@ from funcionCLAHE import equalizeCLAHE
 from funcionEqualize import functionEqualization
 #from funcionLinear import *
 #from funcionLinearPorParte import *
+from funcionHDR import funcionHDR
 from funcionQuadrada import funcionQuadrada
 from funcionSquare import funcionSquare
 
@@ -19,8 +20,8 @@ flags.DEFINE_string('pc', "1", 'identifiy wich pc')
 
 def main(_args):
 
-    img = cv2.imread("./../1imagensEntrada/15.jpg")
-    i = 10
+    img = cv2.imread("./../1imagensEntrada/01.jpg")
+    i = 12
 
     # equalize CLAHE
     if (i == 1):
@@ -132,6 +133,29 @@ def main(_args):
             parametroSquare) + ")_output_CLAHE_" + str(parametroCLAHE) + "_(" + str(
             CLAHE_matriz) + ").png"
         cv2.imwrite(texto, out_clahe)
+
+        # HDR
+
+    #HDR para iamgens de suberexposição
+    elif (i == 12):
+        out_gamma1 = correcaoGamma(img, 0.45)
+        out_gamma2 = correcaoGamma(img, 0.6)
+        out_gamma3 = correcaoGamma(img, 0.7)
+        out_gamma4 = correcaoGamma(img, 0.8)
+        out_gamma5 = correcaoGamma(img, 1.8)
+        out_gamma6 = correcaoGamma(img, 4)
+
+        # Loading exposure images into a list
+        img_list = [out_gamma1, out_gamma2, out_gamma3, out_gamma4, out_gamma5,out_gamma6]
+        #img_list = [cv2.imread(fn) for fn in img_fn]
+
+        output = funcionHDR(img_list)
+        texto = "./../output_HDR_gamma.png"
+        cv2.imwrite(texto, output)
+
+    elif (i == 13):
+        a=1
+        #falta elaborar aq
 
 if __name__ == '__main__':
     try:
