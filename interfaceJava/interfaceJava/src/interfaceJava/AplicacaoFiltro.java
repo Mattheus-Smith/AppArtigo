@@ -66,7 +66,7 @@ public class AplicacaoFiltro extends JFrame {
 	
 	public void inicializeFrame() {
 		
-		this.definirDiretorio = "0";
+		this.definirDiretorio = "1";
 		funcExtras.definirDiretorios(this.definirDiretorio);
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -77,6 +77,8 @@ public class AplicacaoFiltro extends JFrame {
 		Frame.setLayout(new BorderLayout(0, 0));
 		
 		funcExtras.ExeScriptPythonFiltro(funcExtras.camImagem, definirDiretorio, funcExtras.tipoProblema);
+		
+		
 		
 		JPanel centro = new JPanel();
 		Frame.add(centro, BorderLayout.CENTER);

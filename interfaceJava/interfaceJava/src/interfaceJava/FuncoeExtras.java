@@ -45,7 +45,7 @@ public class FuncoeExtras {
 	}
 	
 	public void definirDiretorios(String i) {
-		flagOutput = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\flagOutput.txt";		
+		//flagOutput = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\flagOutput.txt";		
 		if( i == "0" ) {//pessoal
 			camHistoOriginal = "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\saidas\\histograma.png";
 			//Funcao substituirTexto
@@ -63,7 +63,7 @@ public class FuncoeExtras {
 			
 			String[] filtro = {
 	      		      "python",
-	      		      "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\filtro.py",
+	      		      "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\funcoes\\filtro.py",
 	      		      "--img",
 	      		      "",
 	      		      "--pc",
@@ -78,6 +78,9 @@ public class FuncoeExtras {
 			jfc = new JFileChooser("H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\imagens");	//pc pessoal
 			
 		}else { //projeto
+			camHistoOriginal = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\histograma.png";
+			//Funcao substituirTexto
+			arq = "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\saidas\\classificacao.txt";
 			//Funcao ExecutarScriptPython
 			String[] entrada = {
       		      "python",
@@ -91,7 +94,7 @@ public class FuncoeExtras {
 			
 			String[] filtro = {
 	      		      "python",
-	      		      "H:\\SmithHD\\Documentos\\4-github\\AppArtigo\\python\\funcoes\\classificarImagem.py",
+	      		      "C:\\Users\\Smith Fernandes\\Documents\\4 - github\\AppArtigo\\python\\funcoes\\filtro.py",
 	      		      "--img",
 	      		      "",
 	      		      "--pc",
@@ -127,8 +130,8 @@ public class FuncoeExtras {
         	//cmdExecEntrada[7] = problema; 
         	
 		    Runtime.getRuntime().exec(cmdExecFiltro);
-		    
-		    verificarSaida();
+		    Thread.sleep(3200);
+		    //verificarSaida();
 
         } catch(Exception e) {
             System.err.println(e);
